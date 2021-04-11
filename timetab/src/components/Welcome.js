@@ -16,24 +16,68 @@ function Welcome(props) {
   const centerCoords = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
   const topCoords = { x: window.innerWidth / 2, y: 0 };
 
+  let activeBubble = null
+
+  const createTimerBubbles = () => {
+
+    const minutes = [5,15,25,45,60]
+
+    const distance = 0.4*window.innerHeight
+
+    let bubbles = []
+
+    for (let index = 0; index < minutes.length; index++) {
+      const min = minutes[index]
+      const angle = min*Math.PI/120-Math.PI/2
+
+      const xx = window.innerWidth/2 + distance*Math.cos(angle) - 25;
+      const yy = window.innerHeight/2 + distance*Math.sin(angle) - 25;
+
+      bubbles.push(<div key={min} style={{top:yy,left:xx}} onMouseLeave={(e) => mouseBubbleLeave(min)} onMouseEnter={(e) => mouseBubbleEnter(min)} className="timer-bubble">{min}<br /><span>min</span></div>)
+    }
+    return bubbles
+
+  }
+
+  const mouseBubbleEnter = (min) => {
+    console.log("enter")
+    let cursorTooltip = document.getElementById("timer-tooltip")
+    cursorTooltip.style.display = "none";
+    activeBubble = min
+  }
+
+  const mouseBubbleLeave = () => {
+    console.log("leave")
+    let cursorTooltip = document.getElementById("timer-tooltip")
+    if (clockDragStart) {
+      cursorTooltip.style.display = "flex";
+    }
+    activeBubble = null
+  }
 
 
   const mouseUp = (e) => {
+    console.log("mouse up")
     if (clockDragStart && clockNearStart) {
+      let minutes;
+      if (activeBubble) {
+        minutes = activeBubble
+      } else {
+        const endX = e.clientX
+        const endY = e.clientY
+        const endCoords = { x: endX, y: endY }
+        minutes = getTimeFromMouse(endCoords).minutes
+      }
 
-      const endX = e.clientX
-      const endY = e.clientY
-      const endCoords = { x: endX, y: endY }
-
+      clockDragStart = false
       document.getElementById("timer-tooltip").style.display = "none";
       document.getElementById("welcome").classList.remove("welcome--add-timer-cursor");
       document.getElementById("clock").classList.remove("welcome--clock-light");
-      clockDragStart = false
-
-      const minutes = getTimeFromMouse(endCoords).minutes
-
+      document.querySelectorAll('.timer-bubble').forEach(div => {div.style.display = "none";});
+      
       setTimerTime(minutes * 60)
       document.getElementById('timer-on').play();
+
       logEvent("ui_interaction", {
         "section": "clock",
         "subsection": "timer",
@@ -65,6 +109,9 @@ function Welcome(props) {
         document.getElementById("welcome").classList.add("welcome--add-timer-cursor");
         document.getElementById("clock").classList.add("welcome--clock-light");
         clockNearStart = true
+
+        document.querySelectorAll('.timer-bubble').forEach(div => {div.style.display = "flex";});
+
       }
       if (clockNearStart) {
         cursorTooltip.style.left = (e.clientX + 40) + 'px';
@@ -81,12 +128,12 @@ function Welcome(props) {
     const dBy = line2p2.y - line2p1.y;
     let angle = Math.atan2(dAx * dBy - dAy * dBx, dAx * dBx + dAy * dBy);
     if(angle < 0) {angle = angle * -1;}
-    return angle * (180 / Math.PI);
+    return angle;// * (180 / Math.PI);
   }
 
   const getTimeFromMouse = (coords) => {
     let angle = getAngleBetweenLines(centerCoords, topCoords, centerCoords, coords)
-    const minutes = parseInt(angle*2/3)
+    const minutes = parseInt(angle*120/Math.PI)
     const hs = Math.floor(minutes / 60)
     const min = minutes - hs * 60
     return {
@@ -98,6 +145,9 @@ function Welcome(props) {
   return (
     <div id="welcome" onMouseUp={(e) => mouseUp(e)} onMouseMove={(e) => mouseMove(e)}>
       <div id="timer-tooltip"></div>
+
+      {createTimerBubbles()}
+
       <audio id="timer-on" preload="auto"><source src="/sounds/click-tone.wav" type="audio/wav"/></audio>
       <Clock onMouseDown={mouseDownClock} timerTime={timerTime} />
       {props.locationOn ? <SunHours times={props.times} moonIllumination={props.moonIllumination} /> : null}
