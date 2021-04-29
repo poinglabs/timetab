@@ -41,10 +41,20 @@ function Clock(props) {
     }
     if (timerTimeRemaining === 0) {
       document.title = 0 + "s"
+      notifyTimer(props.timerTime)
       stopTimer()
     }
 
   }, 1000);
+
+  function notifyTimer(timerTime) {
+    if (navigator.serviceWorker.controller != null) {
+      navigator.serviceWorker.controller.postMessage({
+        "event" : "notification",
+        "time" : parseInt(timerTime/60)
+      });
+    }
+  }
 
   const stopTimer = () => {
     document.getElementById('timer-end').play();
@@ -77,7 +87,9 @@ function Clock(props) {
   const previousTimerTime = previousTimerTimeRef.current;
   if (props.timerTime !== previousTimerTime && props.timerTime !== timerTime) {
     setTimerTime(props.timerTime);
-    if (props.timerTime) { setTimerTimeRemaining(props.timerTime); }
+    if (props.timerTime) { 
+      setTimerTimeRemaining(props.timerTime); 
+    }
   }
   useEffect(() => {
     previousTimerTimeRef.current = props.timerTime;

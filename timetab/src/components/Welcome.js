@@ -6,22 +6,7 @@ import { logEvent } from './analytics';
 import useWindowDimensions from './useWindowDimensions';
 
 
-
-
 function Welcome(props) {
-
-  /*
-  chrome.notifications.create(
-    "name-for-notification",
-    {
-      type: "basic",
-      iconUrl: "image.jpeg",
-      title: "This is a notification",
-      message: "hello there!",
-    },
-    function () {}
-  );
-  */
 
   const [timerTime, setTimerTime] = useState(null);
 
@@ -59,14 +44,14 @@ function Welcome(props) {
   }
 
   const mouseBubbleEnter = (min) => {
-    console.log("enter")
+    //console.log("enter")
     let cursorTooltip = document.getElementById("timer-tooltip")
     cursorTooltip.style.display = "none";
     activeBubble = min
   }
 
   const mouseBubbleLeave = () => {
-    console.log("leave")
+    //console.log("leave")
     let cursorTooltip = document.getElementById("timer-tooltip")
     if (clockDragStart) {
       cursorTooltip.style.display = "flex";
@@ -74,9 +59,8 @@ function Welcome(props) {
     activeBubble = null
   }
 
-
   const mouseUp = (e) => {
-    console.log("mouse up " + clockDragStart + " " + clockNearStart)
+    //console.log("mouse up " + clockDragStart + " " + clockNearStart)
     if (clockDragStart && clockNearStart) {
       let minutes;
       if (activeBubble) {
@@ -87,8 +71,6 @@ function Welcome(props) {
         const endCoords = { x: endX, y: endY }
         minutes = getTimeFromMouse(endCoords).minutes
       }
-
-
 
       setTimerTime(minutes * 60)
       document.getElementById('timer-on').play();
@@ -116,7 +98,6 @@ function Welcome(props) {
   }
 
   const mouseMove = (e) => {
-    console.log("move " + clockDragStart)
     if (clockDragStart) {
       const moveX = e.clientX
       const moveY = e.clientY

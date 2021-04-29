@@ -10,7 +10,11 @@ handlers:
 
 - url: /manifest\.json
   static_files: manifest.json
-  upload: manifest\.json  
+  upload: manifest\.json
+
+- url: /gtm\.js
+  static_files: gtm.js
+  upload: gtm\.js
 
 - url: /
   static_files: index.html
