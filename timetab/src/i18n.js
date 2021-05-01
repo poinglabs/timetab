@@ -31,6 +31,16 @@ const resources = {
         "beforeSunset": "Sunset in <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutes",
         "beforeSunrise": "Sunrise in <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutes"
       },
+      "moonPhases": {
+        "newMoon" : "New Moon",
+        "waxingCrescent" : "Waxing Crescent",
+        "firstQuarter" : "First Quarter",
+        "waxingGibbous" : "Waxing Gibbous",
+        "fullMoon" : "Full Moon",
+        "waningGibbous" : "Waning Gibbous",
+        "lastQuarter" : "Last Quarter",
+        "waningCresent" : "Waning Crescent"
+      },
       "photoBy" : "Photo by"
   },
   },
@@ -57,6 +67,16 @@ const resources = {
         "beforeSunset": "Quedan <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutos de sol",
         "beforeSunrise": "Amanece en <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutos"
       },
+      "moonPhases": {
+        "newMoon" : "Luna nueva",
+        "waxingCrescent" : "Luna creciente",
+        "firstQuarter" : "Cuarto creciente",
+        "waxingGibbous" : "Luna gibosa creciente",
+        "fullMoon" : "Luna llena",
+        "waningGibbous" : "Luna gibosa menguante",
+        "lastQuarter" : "Cuarto menguante",
+        "waningCresent" : "Luna menguante"
+      },
       "photoBy" : "Foto de"
   },
   },
@@ -82,6 +102,16 @@ const resources = {
       "sunhours": {
         "beforeSunset": "Sonnenuntergang in <1 className='sun-hours__info-minutes'>{{minutes}}</1> Minuten",
         "beforeSunrise": "Sonnenaufgang in <1 className='sun-hours__info-minutes'>{{minutes}}</1> Minuten"
+      },
+      "moonPhases": {
+        "newMoon" : "Neumond",
+        "waxingCrescent" : "erstes Viertel bzw. zunehmende Sichel",
+        "firstQuarter" : "zunehmender Halbmond",
+        "waxingGibbous" : "zweites Viertel",
+        "fullMoon" : "Vollmond",
+        "waningGibbous" : "drittes Viertel",
+        "lastQuarter" : "abnehmender Halbmond",
+        "waningCresent" : "letztes Viertel bzw. abnehmende Sichel"
       },
       "photoBy" : "Foto von"
   },

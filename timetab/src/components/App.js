@@ -53,6 +53,8 @@ function TimeTab(props) {
 
   const { i18n } = useTranslation();
   let moonIllumination = SunCalc.getMoonIllumination(new Date());
+  let moonParallacticAngle = SunCalc.getMoonPosition(new Date(), location.lat, location.lng).parallacticAngle
+
   const modalCustomStyles = {
     content: {
       top: '40%',
@@ -271,7 +273,7 @@ function TimeTab(props) {
   return (
     <div className="main">
 
-      <Welcome times={sunCalcTimes} locationOn={location.autodetect} moonIllumination={moonIllumination} />
+      <Welcome times={sunCalcTimes} locationOn={location.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle}/>
       <Footer photoAuthor={photoAutor} photoUrl={photoUrl} openSettings={openSettingsModal} />
       <Modal
         isOpen={settingsIsOpen}

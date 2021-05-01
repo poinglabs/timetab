@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 //import FormControlLabel from '@material-ui/core/FormControlLabel';
 //import Switch from '@material-ui/core/Switch';
 //import {useTranslation, Trans } from 'react-i18next';
-import {Trans } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import store from 'store'
 import _ from "lodash";
 

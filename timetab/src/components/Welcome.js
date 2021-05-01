@@ -153,7 +153,7 @@ function Welcome(props) {
 
       <audio id="timer-on" preload="auto"><source src="/sounds/click-tone.wav" type="audio/wav" /></audio>
       <Clock onMouseDown={mouseDownClock} timerTime={timerTime} />
-      {props.locationOn ? <SunHours times={props.times} moonIllumination={props.moonIllumination} /> : null}
+      {props.locationOn ? <SunHours times={props.times} moonIllumination={props.moonIllumination} moonParallacticAngle={props.moonParallacticAngle} /> : null}
 
     </div>
   );
