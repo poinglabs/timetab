@@ -1,0 +1,112 @@
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('Ubuntu-Medium.woff2') format('woff2'),
+      url('Ubuntu-Medium.woff') format('woff'),
+      url('Ubuntu-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('OpenSans-Regular.woff2') format('woff2'),
+      url('OpenSans-Regular.woff') format('woff'),
+      url('OpenSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+:root {
+
+  --background-image: none;
+  --background-image-small: none;
+  --color-background: #ffffff;
+  --color-surface: #edf0be;
+  --color-on-background: #202020;
+  --color-on-background-shadow: #ffffff83;
+
+  --font-main: 'Ubuntu', sans-serif;
+  --font-secondary:  'Open Sans', sans-serif;
+  --font-3: 'Comfortaa', cursive;
+
+  --color-dark: #0280906b;
+  --color-light: #21a5b69c;
+  --color-on-dark-light: #ffffffb2;
+  
+  --color-primary: #05668D;
+  --color-secondary: #21a5b6a9;
+  --color-tertiary: #313131;
+  
+  --color-tertiary-shadow: #ffffff80;
+
+  --color-button: #05668D;
+  --color-on-button: #ffffff;
+  --color-button-hover: #05668db4;
+  --color-button-active: #05668d67;
+
+  --color-on-surface: #2b2b2b;
+  --color-on-primary: #1d1d1d;
+  --color-on-secondary: #000000;
+
+  --cursor-timer: url('../img/cursors/timer-white-24dp.svg'), auto;
+  --cursor-timer-add: url('../img/cursors/alarm_add-white-24dp.svg'), auto;
+  --cursor-timer-remove: url('../img/cursors/timer_off-white-24dp.svg'), auto;
+
+  --moon-i: 5;
+}
+
+* {
+  box-sizing: border-box;
+}
+body, html {
+  padding: 0;
+  margin: 0;
+  
+}
+body {
+  background: var(--color-background);
+  background-image: var(--background-image-small);
+  background-size: cover;
+  background-position: center bottom;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+.full-background::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: var(--background-image);
+  background-size: cover;
+  background-position: center bottom;
+  background-attachment: fixed;
+  overflow: hidden;
+  animation: sharpen 0.3s ease-out;
+}
+.blur::before {
+  filter: blur(30px);
+  animation: blur 0.3s ease-in;
+}
+
+@keyframes sharpen {
+  from {
+      filter: blur(30px);
+  }
+  to {
+      filter: blur(0px);
+  }
+}
+
+@keyframes blur {
+  from {
+      filter: blur(0px);
+  }
+  to {
+      filter: blur(30px);
+  }
+}
+
