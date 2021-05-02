@@ -153,7 +153,7 @@ function TimeTab(props) {
   }, []);
 
   useEffect(() => {
-    //console.log("location autodetect")
+    console.log("location autodetect")
     const geoError = (err) => {
       console.log("No geolocation. Setting saved or default")
       console.log(err.message)
@@ -173,7 +173,15 @@ function TimeTab(props) {
     };
 
     if (location.autodetect && navigator.geolocation) {
+
+      console.log("geo get")
+
+      var options = {
+        timeout: 6000
+      };
+
       navigator.geolocation.getCurrentPosition((position) => {
+
         const loc = {
           "lat": position.coords.latitude,
           "lng": position.coords.longitude,
@@ -182,7 +190,7 @@ function TimeTab(props) {
         setLocation(loc)
         setSunCalcTimes(SunCalc.getTimes(new Date(), loc.lat, loc.lng))
         store.set('location', loc)
-      }, geoError);
+      }, geoError, options);
     }
 
   }, [location.autodetect]);
