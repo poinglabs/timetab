@@ -13,11 +13,7 @@ function SunHours(props) {
   const moonIllumination = props.moonIllumination
   let moonParallacticAngle = props.moonParallacticAngle
 
-  console.log(moonParallacticAngle)
-
   const [now, setDate] = useState(new Date());
-
-  console.log(moonIllumination)
 
   document.documentElement.style.setProperty("--moon-i", moonIllumination.fraction);
 
@@ -26,21 +22,21 @@ function SunHours(props) {
   let moonPhase;
 
   if (moonIllumination.phase <= 0.05) {
-    moonPhase = i18n.t("moonPhases.newMoon")
+    moonPhase = i18n.t("moonPhases.newMoon", "New Moon")
   } else if (moonIllumination.phase > 0.05 && moonIllumination.phase <= 0.24) {  
-    moonPhase = i18n.t("moonPhases.waxingCrescent")
+    moonPhase = i18n.t("moonPhases.waxingCrescent", "Waxing Crescent")
   } else if (moonIllumination.phase > 0.24 && moonIllumination.phase <= 0.26) {
-    moonPhase = i18n.t("moonPhases.firstQuarter")
+    moonPhase = i18n.t("moonPhases.firstQuarter", "First Quarter")
   } else if (moonIllumination.phase > 0.26 && moonIllumination.phase <= 0.45) {
-    moonPhase = i18n.t("moonPhases.waxingGibbous")
+    moonPhase = i18n.t("moonPhases.waxingGibbous", "Waxing Gibbous")
   } else if (moonIllumination.phase > 0.45 && moonIllumination.phase <= 0.55) {
-    moonPhase = i18n.t("moonPhases.fullMoon")
+    moonPhase = i18n.t("moonPhases.fullMoon", "Full Moon")
   } else if (moonIllumination.phase > 0.55 && moonIllumination.phase <= 0.7) {  
-    moonPhase = i18n.t("moonPhases.waningGibbous")
+    moonPhase = i18n.t("moonPhases.waningGibbous", "Waning Gibbous")
   } else if (moonIllumination.phase > 0.7 && moonIllumination.phase <= 0.8) {
-    moonPhase = i18n.t("moonPhases.lastQuarter")
+    moonPhase = i18n.t("moonPhases.lastQuarter", "Last Quarter")
   } else {
-    moonPhase = i18n.t("moonPhases.waningCresent")
+    moonPhase = i18n.t("moonPhases.waningCresent", "Waning Cresent")
   }   
 
 

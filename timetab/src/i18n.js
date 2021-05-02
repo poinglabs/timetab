@@ -27,6 +27,10 @@ const resources = {
         "light": "Light",
         "dark": "Dark"
       },
+      "clock":{
+        "timerNotification" : "Timer of {{minutes}} minutes ended!",
+        "timerNotificationTitle" : "Timer ended!"
+      },
       "sunhours": {
         "beforeSunset": "Sunset in <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutes",
         "beforeSunrise": "Sunrise in <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutes"
@@ -63,6 +67,10 @@ const resources = {
         "light": "Claro",
         "dark": "Oscuro"
       },
+      "clock":{
+        "timerNotification" : "Timer de {{minutes}} minutos terminó!",
+        "timerNotificationTitle" : "Tiempo terminó!"
+      },
       "sunhours": {
         "beforeSunset": "Quedan <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutos de sol",
         "beforeSunrise": "Amanece en <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutos"
@@ -98,6 +106,10 @@ const resources = {
         "mountain": "Berge",
         "light": "Hell",
         "dark": "Dunkel"
+      },
+      "clock":{
+        "timerNotification" : "{{minutes}}-Minuten-Takt beendet",
+        "timerNotificationTitle" : "Timer beendet!"
       },
       "sunhours": {
         "beforeSunset": "Sonnenuntergang in <1 className='sun-hours__info-minutes'>{{minutes}}</1> Minuten",

@@ -4,6 +4,7 @@ import Moment from 'react-moment';
 import Zoom from '@material-ui/core/Zoom';
 import 'moment-timezone';
 import {logEvent} from './analytics';
+import { useTranslation } from 'react-i18next';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -32,6 +33,8 @@ function Clock(props) {
   const [timerTime, setTimerTime] = useState(props.timerTime); // seconds
   const [timerTimeRemaining, setTimerTimeRemaining] = useState(props.timerTime);
 
+  const { i18n } = useTranslation();
+
   useInterval(() => {
     // Your custom logic here
     setDate(new Date());
@@ -51,7 +54,8 @@ function Clock(props) {
     if (navigator.serviceWorker.controller != null) {
       navigator.serviceWorker.controller.postMessage({
         "event" : "notification",
-        "time" : parseInt(timerTime/60)
+        "message" : i18n.t("clock.timerNotification", "Timer of {{minutes}} minutes ended!", { "minutes" : parseInt(timerTime/60) }),
+        "title" : i18n.t("clock.timerNotificationTitle", "Timer ended!")
       });
     }
   }
