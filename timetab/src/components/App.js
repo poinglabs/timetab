@@ -12,7 +12,7 @@ import _ from "lodash";
 import SunCalc from 'suncalc'
 import store from 'store'
 
-import {logEvent} from './analytics';
+import { logEvent } from './analytics';
 
 // https://www.npmjs.com/package/suncalc
 
@@ -76,9 +76,9 @@ function TimeTab(props) {
   const openSettingsModal = () => {
     logEvent("ui_interaction", {
       "section": "settings",
-      "subction":undefined,
+      "subction": undefined,
       "action": "open",
-      "element" : undefined,
+      "element": undefined,
       "value": undefined
     })
     setSettingsOpen(true);
@@ -86,9 +86,9 @@ function TimeTab(props) {
   const closeSettingsModal = () => {
     logEvent("ui_interaction", {
       "section": "settings",
-      "subction":undefined,
+      "subction": undefined,
       "action": "close",
-      "element" : undefined,
+      "element": undefined,
       "value": undefined
     })
     setSettingsOpen(false);
@@ -104,7 +104,7 @@ function TimeTab(props) {
     store.set('theme', newTheme)
     logEvent("ui_interaction", {
       "section": "settings",
-      "subction":undefined,
+      "subction": undefined,
       "action": "change theme",
       "element": newTheme,
       "value": undefined
@@ -115,7 +115,7 @@ function TimeTab(props) {
     i18n.changeLanguage(lng);
     logEvent("ui_interaction", {
       "section": "settings",
-      "subction":undefined,
+      "subction": undefined,
       "action": "change language",
       "element": lng,
       "value": undefined
@@ -137,6 +137,7 @@ function TimeTab(props) {
 
 
   useEffect(() => {
+
     //console.log("fetch data")
     Promise.all([
       fetch('./themes/themes.json'),
@@ -153,7 +154,7 @@ function TimeTab(props) {
   }, []);
 
   useEffect(() => {
-    console.log("location autodetect")
+    //console.log("location autodetect")
     const geoError = (err) => {
       console.log("No geolocation. Setting saved or default")
       console.log(err.message)
@@ -173,8 +174,6 @@ function TimeTab(props) {
     };
 
     if (location.autodetect && navigator.geolocation) {
-
-      console.log("geo get")
 
       var options = {
         timeout: 6000
@@ -198,90 +197,201 @@ function TimeTab(props) {
   // render theme
   useEffect(() => {
     //console.log("change theme "+theme)
-    try {
-      const requestImageFile = require.context('../', true);
-      const evaluateLogic = (str) => {
-        const hs = {
-          "sunrise_hs": sunCalcTimes.sunrise.getHours() + sunCalcTimes.sunrise.getMinutes() / 60,
-          "sunset_hs": sunCalcTimes.sunset.getHours() + sunCalcTimes.sunset.getMinutes() / 60
-        }
 
-        if (str.indexOf("+") > -1) {
-          const elements = str.split("+").map(s => s.trim()) // split and trim
-          const part1 = hs[elements[0]] ? hs[elements[0]] : parseFloat(elements[0])
-          const part2 = hs[elements[1]] ? hs[elements[1]] : parseFloat(elements[1])
-          return part1 + part2
-        } else if (str.indexOf("-") > -1) {
-          const elements = str.split("-").map(s => s.trim()) // split and trim
-          const part1 = hs[elements[0]] ? hs[elements[0]] : parseFloat(elements[0])
-          const part2 = hs[elements[1]] ? hs[elements[1]] : parseFloat(elements[1])
-          return part1 - part2
-        } else {
-          return hs[str] ? hs[str] : parseFloat(str)
-        }
-
+    // IndexDB
+    if (!window.indexedDB) {
+      console.log("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
+    } else {
+      console.log("indexedDB Ready")
+      var request = window.indexedDB.open("timetab", 1);
+      request.onerror = function (event) {
+        console.log("error")
+      };
+      request.onsuccess = function (event) {
+        console.log("indexedDB loaded")
+        let db = event.target.result;
+        changeImage(db)
       }
 
-      if (themes && themeProperties && themeImages) {
-        const myTheme = _.find(themes, ['name', theme])
-        const myThemeLogic = myTheme["logic"]
+      request.onupgradeneeded = function (event) {
+        console.log("indexedDB updated")
+        let db = event.target.result;
+        db.createObjectStore('images');
+        changeImage(db)
+      }
 
-        for (let index = 0; index < myThemeLogic.length; index++) {
-          const timeframeInfo = myThemeLogic[index]
+      const changeImage = (db) => {
 
-          const h_start = evaluateLogic(timeframeInfo["start"]) // eval(timeframeInfo["start"])
-          const h_end = evaluateLogic(timeframeInfo["end"]) // eval(timeframeInfo["end"])
-
-          const now = new Date()
-          const hs = (now.getHours() + now.getMinutes() / 60)
-
-          if (hs > h_start && hs < h_end) {
-            const random_index = Math.round(Math.random() * (timeframeInfo["theme"].length - 1))
-            const mySubTheme = timeframeInfo["theme"][random_index]
-            const myThemeProps = _.find(themeProperties, ['name', mySubTheme["props"]])["properties"]
-            const myThemeBackgroundImg = mySubTheme["bgdImage"] !== "" ? _.find(themeImages, ['id', mySubTheme["bgdImage"]]) : undefined;
-
-            // theme props, colors
-            for (var key in myThemeProps) {
-              if (myThemeProps.hasOwnProperty(key)) {
-                if (key.indexOf("--cursor") > -1) {
-                  const cursorImageUrl = requestImageFile("./img/cursors/" + myThemeProps[key]).default
-                  document.documentElement.style.setProperty(key, `url('${cursorImageUrl}'), auto`);
-                } else {
-                  document.documentElement.style.setProperty(key, myThemeProps[key]);
-                }
-              }
+        try {
+          const requestImageFile = require.context('../', true);
+          const evaluateLogic = (str) => {
+            const hs = {
+              "sunrise_hs": sunCalcTimes.sunrise.getHours() + sunCalcTimes.sunrise.getMinutes() / 60,
+              "sunset_hs": sunCalcTimes.sunset.getHours() + sunCalcTimes.sunset.getMinutes() / 60
             }
 
-            document.body.classList.remove("full-background");
-            if (myThemeBackgroundImg) {
-              document.documentElement.style.setProperty("--background-image-small", `url('${myThemeBackgroundImg["base64"]}')`);
-              var img = new Image();
-
-              const imgSrc = requestImageFile('./' + myThemeBackgroundImg["uri"]).default
-              img.onload = function () {
-                document.documentElement.style.setProperty("--background-image", `url('${imgSrc}')`);
-                document.body.classList.add("full-background");
-                setphotoAutor(myThemeBackgroundImg["author"])
-                setphotoUrl(myThemeBackgroundImg["url"])
-              };
-              img.src = imgSrc
+            if (str.indexOf("+") > -1) {
+              const elements = str.split("+").map(s => s.trim()) // split and trim
+              const part1 = hs[elements[0]] ? hs[elements[0]] : parseFloat(elements[0])
+              const part2 = hs[elements[1]] ? hs[elements[1]] : parseFloat(elements[1])
+              return part1 + part2
+            } else if (str.indexOf("-") > -1) {
+              const elements = str.split("-").map(s => s.trim()) // split and trim
+              const part1 = hs[elements[0]] ? hs[elements[0]] : parseFloat(elements[0])
+              const part2 = hs[elements[1]] ? hs[elements[1]] : parseFloat(elements[1])
+              return part1 - part2
+            } else {
+              return hs[str] ? hs[str] : parseFloat(str)
             }
-            setphotoAutor(undefined)
-            setphotoUrl(undefined)
-            break;
 
           }
-        }
+
+          if (themes && themeProperties && themeImages) {
+            const myTheme = _.find(themes, ['name', theme])
+            const myThemeLogic = myTheme["logic"]
+
+            for (let index = 0; index < myThemeLogic.length; index++) {
+              const timeframeInfo = myThemeLogic[index]
+
+              const h_start = evaluateLogic(timeframeInfo["start"]) // eval(timeframeInfo["start"])
+              const h_end = evaluateLogic(timeframeInfo["end"]) // eval(timeframeInfo["end"])
+
+              const now = new Date()
+              const hs = (now.getHours() + now.getMinutes() / 60)
+
+              if (hs > h_start && hs < h_end) {
+                const random_index = Math.round(Math.random() * (timeframeInfo["theme"].length - 1))
+                const mySubTheme = timeframeInfo["theme"][random_index]
+                const myThemeProps = _.find(themeProperties, ['name', mySubTheme["props"]])["properties"]
+                const myThemeBackgroundImg = mySubTheme["bgdImage"] !== "" ? _.find(themeImages, ['id', mySubTheme["bgdImage"]]) : undefined;
+
+                // theme props, colors
+                for (var key in myThemeProps) {
+                  if (myThemeProps.hasOwnProperty(key)) {
+                    if (key.indexOf("--cursor") > -1) {
+                      const cursorImageUrl = requestImageFile("./img/cursors/" + myThemeProps[key]).default
+                      document.documentElement.style.setProperty(key, `url('${cursorImageUrl}'), auto`);
+                    } else {
+                      document.documentElement.style.setProperty(key, myThemeProps[key]);
+                    }
+                  }
+                }
+
+                document.body.classList.remove("full-background");
+                if (myThemeBackgroundImg) {
+
+                  try {
+
+                    console.log(myThemeBackgroundImg["id"])
+                    var transaction = db.transaction(["images"]);
+                    var objectStore = transaction.objectStore("images");
+                    var request = objectStore.get(myThemeBackgroundImg["id"]);
+                    request.onerror = function (event) {
+                      console.log("image doesn't exist")
+
+
+
+                    };
+                    request.onsuccess = function (event) {
+
+                      if (request.result === undefined) {
+                        try {
+                          console.log("download image")
+                          // Create XHR
+                          var xhr = new XMLHttpRequest(), blob;
+
+                          xhr.open("GET", myThemeBackgroundImg["remoteUri"], true);
+                          // Set the responseType to blob
+                          xhr.responseType = "blob";
+
+                          xhr.addEventListener("load", function () {
+                            if (xhr.status === 200) {
+                              console.log("Image retrieved");
+
+                              // Blob as response
+                              blob = xhr.response;
+                              console.log("Blob:" + blob);
+
+                              // Put the received blob into IndexedDB
+
+                              try {
+
+                                var store = db.transaction(['images'], 'readwrite').objectStore('images');
+
+                                // Store the object  
+                                var req = store.put(blob, myThemeBackgroundImg["id"]);
+                                req.onerror = function (e) {
+                                  console.log(e);
+                                };
+                                req.onsuccess = function (event) {
+                                  console.log('Successfully stored a blob as Blob.');
+                                };
+                              } catch (e) {
+                                console.log("error saving blob")
+                                console.log(e)
+                              }
+                            }
+                          }, false);
+                          // Send XHR
+                          xhr.send();
+
+                        } catch (e) { console.log("no remote uri") }
+                      } else {
+
+                        // Do something with the request.result!
+                        console.log("get object");
+
+                        var urlCreator = window.URL || window.webkitURL;
+                        var imageUrl = urlCreator.createObjectURL(request.result);
+
+                        console.log(imageUrl);
+                        document.body.classList.add("full-background");
+                        //document.documentElement.style.setProperty("--background-image", `url(data:image/jpeg;base64,${imageUrl})`);
+                        document.documentElement.style.setProperty("--background-image", `url('${imageUrl}')`);
+                      }
+                    };
+
+
+
+                  } catch (e) { }
+
+
+                  /*
+                  document.documentElement.style.setProperty("--background-image-small", `url('${myThemeBackgroundImg["base64"]}')`);
+                  var img = new Image();
+    
+                  const imgSrc = requestImageFile('./' + myThemeBackgroundImg["uri"]).default
+                  img.onload = function () {
+                    document.documentElement.style.setProperty("--background-image", `url('${imgSrc}')`);
+                    document.body.classList.add("full-background");
+                    setphotoAutor(myThemeBackgroundImg["author"])
+                    setphotoUrl(myThemeBackgroundImg["url"])
+                  };
+                  img.src = imgSrc
+                  */
+
+                }
+                setphotoAutor(undefined)
+                setphotoUrl(undefined)
+                break;
+
+              }
+            }
+          }
+        } catch (e) { }
+
       }
-    } catch (e) {}
+
+
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
   return (
     <div className="main">
 
-      <Welcome times={sunCalcTimes} locationOn={location.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle}/>
+      <Welcome times={sunCalcTimes} locationOn={location.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle} />
       <Footer photoAuthor={photoAutor} photoUrl={photoUrl} openSettings={openSettingsModal} />
       <Modal
         isOpen={settingsIsOpen}
