@@ -279,7 +279,7 @@ function TimeTab(props) {
 
                 document.body.classList.remove("full-background");
                 if (myThemeBackgroundImg) {
-
+                  document.documentElement.style.setProperty("--background-image-small", `url('${myThemeBackgroundImg["base64"]}')`);
                   try {
 
                     console.log(myThemeBackgroundImg["id"])
@@ -325,6 +325,7 @@ function TimeTab(props) {
                                 };
                                 req.onsuccess = function (event) {
                                   console.log('Successfully stored a blob as Blob.');
+                                  changeImage(db)
                                 };
                               } catch (e) {
                                 console.log("error saving blob")
@@ -345,9 +346,19 @@ function TimeTab(props) {
                         var imageUrl = urlCreator.createObjectURL(request.result);
 
                         console.log(imageUrl);
-                        document.body.classList.add("full-background");
                         //document.documentElement.style.setProperty("--background-image", `url(data:image/jpeg;base64,${imageUrl})`);
-                        document.documentElement.style.setProperty("--background-image", `url('${imageUrl}')`);
+                        
+                        var img = new Image();
+
+                        img.onload = function () {
+                          document.documentElement.style.setProperty("--background-image", `url('${imageUrl}')`);
+                          document.body.classList.add("full-background");
+                          setphotoAutor(myThemeBackgroundImg["author"])
+                          setphotoUrl(myThemeBackgroundImg["url"])
+                        };
+                        img.src = imageUrl
+
+
                       }
                     };
 
