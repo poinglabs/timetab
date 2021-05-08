@@ -154,7 +154,7 @@ function TimeTab(props) {
   }, []);
 
   useEffect(() => {
-    //console.log("location autodetect")
+    console.log("location autodetect")
     const geoError = (err) => {
       console.log("No geolocation. Setting saved or default")
       console.log(err.message)
@@ -173,14 +173,14 @@ function TimeTab(props) {
 
     };
 
-    if (location.autodetect && navigator.geolocation) {
+    if (navigator.geolocation) {
 
       var options = {
-        timeout: 6000
+        timeout: 10000
       };
 
       navigator.geolocation.getCurrentPosition((position) => {
-
+        console.log("got location")
         const loc = {
           "lat": position.coords.latitude,
           "lng": position.coords.longitude,
@@ -192,7 +192,7 @@ function TimeTab(props) {
       }, geoError, options);
     }
 
-  }, [location.autodetect]);
+  }, []);
 
   // render theme
   useEffect(() => {
@@ -205,16 +205,15 @@ function TimeTab(props) {
       console.log("indexedDB Ready")
       var request = window.indexedDB.open("timetab", 1);
       request.onerror = function (event) {
-        console.log("error")
+        console.error("Error opening IndexedDB")
       };
       request.onsuccess = function (event) {
-        console.log("indexedDB loaded")
         let db = event.target.result;
         changeImage(db)
       }
 
       request.onupgradeneeded = function (event) {
-        console.log("indexedDB updated")
+        console.log("IndexedDB created or updated")
         let db = event.target.result;
         db.createObjectStore('images');
         changeImage(db)
@@ -282,21 +281,18 @@ function TimeTab(props) {
                   document.documentElement.style.setProperty("--background-image-small", `url('${myThemeBackgroundImg["base64"]}')`);
                   try {
 
-                    console.log(myThemeBackgroundImg["id"])
+                    //console.log(myThemeBackgroundImg["id"])
                     var transaction = db.transaction(["images"]);
                     var objectStore = transaction.objectStore("images");
                     var request = objectStore.get(myThemeBackgroundImg["id"]);
                     request.onerror = function (event) {
-                      console.log("image doesn't exist")
-
-
-
+                      console.log("Error getting image")
                     };
                     request.onsuccess = function (event) {
 
                       if (request.result === undefined) {
                         try {
-                          console.log("download image")
+                          // console.log("Download image")
                           // Create XHR
                           var xhr = new XMLHttpRequest(), blob;
 
@@ -306,11 +302,11 @@ function TimeTab(props) {
 
                           xhr.addEventListener("load", function () {
                             if (xhr.status === 200) {
-                              console.log("Image retrieved");
+                              // console.log("Image retrieved");
 
                               // Blob as response
                               blob = xhr.response;
-                              console.log("Blob:" + blob);
+                              // console.log("Blob:" + blob);
 
                               // Put the received blob into IndexedDB
 
@@ -324,7 +320,7 @@ function TimeTab(props) {
                                   console.log(e);
                                 };
                                 req.onsuccess = function (event) {
-                                  console.log('Successfully stored a blob as Blob.');
+                                  //console.log('Successfully stored a blob as Blob.');
                                   changeImage(db)
                                 };
                               } catch (e) {
@@ -340,12 +336,12 @@ function TimeTab(props) {
                       } else {
 
                         // Do something with the request.result!
-                        console.log("get object");
+                        //console.log("get object");
 
                         var urlCreator = window.URL || window.webkitURL;
                         var imageUrl = urlCreator.createObjectURL(request.result);
 
-                        console.log(imageUrl);
+                        //console.log(imageUrl);
                         //document.documentElement.style.setProperty("--background-image", `url(data:image/jpeg;base64,${imageUrl})`);
                         
                         var img = new Image();
@@ -357,29 +353,12 @@ function TimeTab(props) {
                           setphotoUrl(myThemeBackgroundImg["url"])
                         };
                         img.src = imageUrl
-
-
                       }
                     };
 
 
 
                   } catch (e) { }
-
-
-                  /*
-                  document.documentElement.style.setProperty("--background-image-small", `url('${myThemeBackgroundImg["base64"]}')`);
-                  var img = new Image();
-    
-                  const imgSrc = requestImageFile('./' + myThemeBackgroundImg["uri"]).default
-                  img.onload = function () {
-                    document.documentElement.style.setProperty("--background-image", `url('${imgSrc}')`);
-                    document.body.classList.add("full-background");
-                    setphotoAutor(myThemeBackgroundImg["author"])
-                    setphotoUrl(myThemeBackgroundImg["url"])
-                  };
-                  img.src = imgSrc
-                  */
 
                 }
                 setphotoAutor(undefined)

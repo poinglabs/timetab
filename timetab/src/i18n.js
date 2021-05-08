@@ -18,7 +18,7 @@ const resources = {
         "latitude":"Latitude",
         "longitude":"Longitude",
         "autodetect":"Autodetect",
-        "pleaseShareLocation" : "Please share your <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>location</1>"
+        "pleaseShareLocation" : "Please enable location settings in your <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>browser</1> and OS to get the full theme experience"
       },
       "themes" : {
         "default": "Mix",
@@ -58,7 +58,7 @@ const resources = {
         "latitude":"Latitud",
         "longitude":"Longitud",
         "autodetect":"Autodetectar",
-        "pleaseShareLocation" : "Por favor compartí tu <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>ubicación</1>"
+        "pleaseShareLocation" : "Por favor active la configuración de ubicación en su <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>navegador</1> y sistema operativo para obtener la experiencia completa del tema"
       },
       "themes" : {
         "default": "Variado",
@@ -98,7 +98,7 @@ const resources = {
         "latitude":"Breitengrad",
         "longitude":"Längengrad",
         "autodetect":"Autodetect",
-        "pleaseShareLocation" : "Bitte teilen Sie Ihren <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>Standort</1>"
+        "pleaseShareLocation" : "Bitte aktivieren Sie die Standortseinstellungen in Ihrem <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>Browser</1> und Betriebssystem, um das Thema in vollem Umfang nutzen zu können"
       },
       "themes" : {
         "default": "Mix",

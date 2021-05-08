@@ -41,7 +41,7 @@ h3 {
 }
 
 .please-share {
-    display: flex;
+    display: inline-block;
     align-items: center;
     font-family: var(--font-secondary);
     font-size: 12px;

@@ -16,9 +16,8 @@
 
 /* Settings */
 
-.settings-modal {
-  max-width: 100%;
-  min-width: 800px;
+.ReactModal__Content {
+  max-width: 650px;
 }
 
 .ReactModal__Overlay {

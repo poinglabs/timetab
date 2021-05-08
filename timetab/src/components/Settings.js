@@ -111,7 +111,7 @@ function Settings(props) {
     } else if (item["palette"].length) {
       t_style = { "background": `linear-gradient(90deg, ${item["palette"][0]} 0%, ${item["palette"][0]} 33%, ${item["palette"][1]} 33%, ${item["palette"][1]} 66%, ${item["palette"][2]} 66%, ${item["palette"][2]} 100%)` }
     }
-    
+
     return (
       <Paper variant="outlined" className={activeTheme === item.name ? classesThemesActive.root : classesThemes.root} key={item.name} elevation={elevation} onClick={() => props.changeTheme(item.name)}>
         <h3><Trans i18nKey={"themes." + item.name}>{item.name}</Trans></h3>
@@ -135,6 +135,7 @@ function Settings(props) {
           <Chip className={activeLang.startsWith("de") ? classesChipsActive.root : classesChips.root} label="Deutsch" variant="outlined" avatar={<Avatar src={flag_de} />} onClick={() => props.changeLanguagee("de")} />
         </div>
       </section>
+
       {/*
       <section>
         <h2>
@@ -159,12 +160,20 @@ function Settings(props) {
         </div>
           </section>*/}
       <section>
-      <h2>
+        <h2>
           <Trans i18nKey="settings.theme">Theme</Trans>
-          </h2>
+        </h2>
         <div>
           {props.themes.map(renderTheme)}
         </div>
+      </section>
+      <section>
+
+        {!props.location.autodetect &&
+          <div className="please-share" >
+            <Trans i18nKey="settings.pleaseShareLocation">Please enable location settings in your <a target="_blank" rel="noreferrer" href="https://support.google.com/chrome/answer/142065">browser</a> and OS to get the full theme experience</Trans>
+        </div>}
+
       </section>
       <div>
       </div>
