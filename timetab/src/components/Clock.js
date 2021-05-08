@@ -2,8 +2,9 @@ import '../css/Clock.css';
 import React, { useState, useEffect, useRef } from 'react';
 import Moment from 'react-moment';
 import Zoom from '@material-ui/core/Zoom';
-import Fade from '@material-ui/core/Fade';
 import 'moment-timezone';
+import {logEvent} from './analytics';
+import { useTranslation } from 'react-i18next';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -32,6 +33,8 @@ function Clock(props) {
   const [timerTime, setTimerTime] = useState(props.timerTime); // seconds
   const [timerTimeRemaining, setTimerTimeRemaining] = useState(props.timerTime);
 
+  const { i18n } = useTranslation();
+
   useInterval(() => {
     // Your custom logic here
     setDate(new Date());
@@ -39,23 +42,47 @@ function Clock(props) {
       setTimerTimeRemaining(timerTimeRemaining - 1)
       document.title = timerTimeRemaining + "s"
     }
-    if (timerTimeRemaining == 0) {
+    if (timerTimeRemaining === 0) {
       document.title = 0 + "s"
+      notifyTimer(props.timerTime)
       stopTimer()
     }
 
   }, 1000);
 
+  function notifyTimer(timerTime) {
+    if (navigator.serviceWorker.controller != null) {
+      navigator.serviceWorker.controller.postMessage({
+        "event" : "notification",
+        "message" : i18n.t("clock.timerNotification", "Timer of {{minutes}} minutes ended!", { "minutes" : parseInt(timerTime/60) }),
+        "title" : i18n.t("clock.timerNotificationTitle", "Timer ended!")
+      });
+    }
+  }
+
   const stopTimer = () => {
-    console.log("timer end")
     document.getElementById('timer-end').play();
     setTimerTime(null)
     setTimerTimeRemaining(null)
+    logEvent("ui_interaction", {
+      "section": "clock",
+      "subsection": "timer",
+      "action": "end",
+      "element": "timer",
+    })
   }
   const deleteTimer = () => {
     document.getElementById('timer-remove').play();
     setTimerTime(null)
     setTimerTimeRemaining(null)
+    document.title = "timetab"
+    logEvent("ui_interaction", {
+      "section": "clock",
+      "subsection": "timer",
+      "action": "remove",
+      "element": "timer",
+      "value" : undefined
+    })
 
   }
 
@@ -64,7 +91,9 @@ function Clock(props) {
   const previousTimerTime = previousTimerTimeRef.current;
   if (props.timerTime !== previousTimerTime && props.timerTime !== timerTime) {
     setTimerTime(props.timerTime);
-    if (props.timerTime) { setTimerTimeRemaining(props.timerTime); }
+    if (props.timerTime) { 
+      setTimerTimeRemaining(props.timerTime); 
+    }
   }
   useEffect(() => {
     previousTimerTimeRef.current = props.timerTime;
@@ -73,7 +102,7 @@ function Clock(props) {
   return (
     <React.Fragment>
       <div id="clock" style={{ "display": timerTimeRemaining ? "none" : "block" }} className="clock" onMouseDown={props.onMouseDown}><Moment format="H·mm" date={date}></Moment></div>
-      <Zoom in={timerTime}>
+      <Zoom in={timerTime > 0}>
         <div id="timer" onClick={() => deleteTimer()} className="timer" style={{ "display": timerTimeRemaining ? "block" : "none" }}>
           {timerTimeRemaining ? <Moment tz="UTC" format={timerTimeRemaining > 3600 ? "HH·mm·ss" : "mm·ss"} date={new Date(timerTimeRemaining * 1000)}></Moment> : null}
         </div>

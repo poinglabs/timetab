@@ -1,23 +1,31 @@
 # timetab
-## Put your time in perspective and take action
 
-This is an experimental project with the goal of presenting time in different ways and inspire action
+A beautiful new tab page to take control of your time.
 
- - Moment of day / Remaing daylight / Sunrise ans sunset
- - Day in 10 minutes blocks
- - Next 60 days / Holidays planning
- - Moment fo year / Months / Seasons
- - Life calendar / Weeks
+[Download Extension](https://chrome.google.com/webstore/detail/timetab/liobdfgkcgpgfeoemlcoelichpjpbkhe)
 
 
+## Changelog
 
-## React setup
+### v0.0.2
 
-install node and npm
+ - Timer bubbles for common durations
+ - Timer notifications
+ - More accurate moon phases
+ - Migration to extension manifest v3 and paused analytics
+ - Better location detection and error handling
+ - Reduced extension size by saving images in indexedDB
+ - Better icons and screenshots
 
-npx create-react-app timetab
+### v0.0.1
 
-creates a folder for the app with basic structure and resources
+ - Displays the time
+ - Easy timer creation
+ - Displays sunrise, sunset and moon phase.
+ - Changing backgrounds according to the time
+ - Different themes and dark mode
+ - Multi-language: english, spanish and german
 
-cd timetab
-nppm start
+## Tags and concepts
+
+time, moment, experience, clock, sun, action, calendar, life, universe, tab, new tab, browser, start, page

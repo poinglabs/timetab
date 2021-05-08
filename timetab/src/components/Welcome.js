@@ -1,58 +1,104 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../css/Welcome.css';
 import Clock from './Clock';
 import SunHours from './SunHours';
-import { useTranslation, Trans } from 'react-i18next';
-
-import _ from "lodash";
-import SunCalc from 'suncalc'
-import store from 'store'
+import { logEvent } from './analytics';
+import useWindowDimensions from './useWindowDimensions';
 
 
 function Welcome(props) {
 
   const [timerTime, setTimerTime] = useState(null);
 
+  const { height, width } = useWindowDimensions();
+
   let clockDragStart = false;
   let clockNearStart = false;
 
   let clockDragStartCoords = { x: null, y: null };
-  //let clockDragNearCoords = {x:null, y:null};
-  let clockDragEndCoords = { x: null, y: null };
 
-  const centerCoords = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  const topCoords = { x: window.innerWidth / 2, y: 0 };
+  const centerCoords = { x: width / 2, y: height / 2 };
+  const topCoords = { x: width / 2, y: 0 };
 
+  let activeBubble = null
 
+  const createTimerBubbles = () => {
+
+    const minutes = [5, 15, 25, 45, 60]
+
+    const distance = 0.4 * height
+
+    let bubbles = []
+
+    for (let index = 0; index < minutes.length; index++) {
+      const min = minutes[index]
+      const angle = min * Math.PI / 120 - Math.PI / 2
+
+      const xx = width / 2 + distance * Math.cos(angle) - 30;
+      const yy = height / 2 + distance * Math.sin(angle) - 30;
+
+      bubbles.push(<div key={min} style={{ top: yy, left: xx }} onMouseLeave={(e) => mouseBubbleLeave(min)} onMouseEnter={(e) => mouseBubbleEnter(min)} className="timer-bubble">{min}<br /><span>min</span></div>)
+    }
+    return bubbles
+
+  }
+
+  const mouseBubbleEnter = (min) => {
+    //console.log("enter")
+    let cursorTooltip = document.getElementById("timer-tooltip")
+    cursorTooltip.style.display = "none";
+    activeBubble = min
+  }
+
+  const mouseBubbleLeave = () => {
+    //console.log("leave")
+    let cursorTooltip = document.getElementById("timer-tooltip")
+    if (clockDragStart) {
+      cursorTooltip.style.display = "flex";
+    }
+    activeBubble = null
+  }
 
   const mouseUp = (e) => {
+    //console.log("mouse up " + clockDragStart + " " + clockNearStart)
     if (clockDragStart && clockNearStart) {
-
-      const endX = e.clientX
-      const endY = e.clientY
-      const endCoords = { x: endX, y: endY }
-
-      document.getElementById("timer-tooltip").style.display = "none";
-      document.getElementById("welcome").classList.remove("welcome--add-timer-cursor");
-      document.getElementById("clock").classList.remove("welcome--clock-light");
-      clockDragStart = false
-
-      const minutes = getTimeFromMouse(endCoords).minutes
+      let minutes;
+      if (activeBubble) {
+        minutes = activeBubble
+      } else {
+        const endX = e.clientX
+        const endY = e.clientY
+        const endCoords = { x: endX, y: endY }
+        minutes = getTimeFromMouse(endCoords).minutes
+      }
 
       setTimerTime(minutes * 60)
       document.getElementById('timer-on').play();
+
+      logEvent("ui_interaction", {
+        "section": "clock",
+        "subsection": "timer",
+        "action": "add",
+        "element": "timer",
+        "value": minutes
+      })
     }
+
+    clockDragStart = false
+    document.getElementById("timer-tooltip").style.display = "none";
+    document.getElementById("welcome").classList.remove("welcome--add-timer-cursor");
+    document.getElementById("clock").classList.remove("welcome--clock-light");
+    document.querySelectorAll('.timer-bubble').forEach(div => { div.style.display = "none"; });
+
   }
 
   const mouseDownClock = (e) => {
     clockDragStart = true
     clockDragStartCoords = { x: e.clientX, y: e.clientY }
-    console.log("mouse down")
   }
 
   const mouseMove = (e) => {
     if (clockDragStart) {
-
       const moveX = e.clientX
       const moveY = e.clientY
       const moveCoords = { x: moveX, y: moveY }
@@ -61,14 +107,17 @@ function Welcome(props) {
       var distance = Math.sqrt(a * a + b * b);
 
       let cursorTooltip = document.getElementById("timer-tooltip")
-      if (!clockNearStart && distance > 100) {
+      if (!clockNearStart && distance > 40) {
         cursorTooltip.style.display = "flex";
         document.getElementById("welcome").classList.add("welcome--add-timer-cursor");
         document.getElementById("clock").classList.add("welcome--clock-light");
         clockNearStart = true
+
+        document.querySelectorAll('.timer-bubble').forEach(div => { div.style.display = "flex"; div.classList.add("show") });
+
       }
       if (clockNearStart) {
-        cursorTooltip.style.left = (e.clientX + 40) + 'px';
+        cursorTooltip.style.left = (e.clientX + 30) + 'px';
         cursorTooltip.style.top = e.clientY + 'px';
         cursorTooltip.innerText = getTimeFromMouse(moveCoords).strTime
       }
@@ -81,13 +130,13 @@ function Welcome(props) {
     const dBx = line2p2.x - line2p1.x;
     const dBy = line2p2.y - line2p1.y;
     let angle = Math.atan2(dAx * dBy - dAy * dBx, dAx * dBx + dAy * dBy);
-    if(angle < 0) {angle = angle * -1;}
-    return angle * (180 / Math.PI);
+    if (angle < 0) { angle = angle * -1; }
+    return angle;// * (180 / Math.PI);
   }
 
   const getTimeFromMouse = (coords) => {
     let angle = getAngleBetweenLines(centerCoords, topCoords, centerCoords, coords)
-    const minutes = parseInt(angle*2/3)
+    const minutes = parseInt(angle * 120 / Math.PI)
     const hs = Math.floor(minutes / 60)
     const min = minutes - hs * 60
     return {
@@ -99,9 +148,13 @@ function Welcome(props) {
   return (
     <div id="welcome" onMouseUp={(e) => mouseUp(e)} onMouseMove={(e) => mouseMove(e)}>
       <div id="timer-tooltip"></div>
-      <audio id="timer-on"><source src="/sounds/click-tone.wav" type="audio/wav"/></audio>
+
+      {createTimerBubbles()}
+
+      <audio id="timer-on" preload="auto"><source src="/sounds/click-tone.wav" type="audio/wav" /></audio>
       <Clock onMouseDown={mouseDownClock} timerTime={timerTime} />
-      <SunHours times={props.times} moonIllumination={props.moonIllumination} />
+      {props.locationOn ? <SunHours times={props.times} moonIllumination={props.moonIllumination} moonParallacticAngle={props.moonParallacticAngle} /> : null}
+
     </div>
   );
 }
