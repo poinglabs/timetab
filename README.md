@@ -9,6 +9,14 @@ A beautiful new tab page to take control of your time.
 
 ### v0.0.2
 
+ - Timer bubbles for common durations
+ - Timer notifications
+ - More accurate moon phases
+ - Migration to extension manifest v3 and paused analytics
+ - Better location detection and error handling
+ - Reduced extension size by saving images in indexedDB
+ - Better icons and screenshots
+
 ### v0.0.1
 
  - Displays the time

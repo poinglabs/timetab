@@ -154,7 +154,6 @@ function TimeTab(props) {
   }, []);
 
   useEffect(() => {
-    console.log("location autodetect")
     const geoError = (err) => {
       console.log("No geolocation. Setting saved or default")
       console.log(err.message)
@@ -180,7 +179,7 @@ function TimeTab(props) {
       };
 
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log("got location")
+        console.log("Got location")
         const loc = {
           "lat": position.coords.latitude,
           "lng": position.coords.longitude,
@@ -202,7 +201,7 @@ function TimeTab(props) {
     if (!window.indexedDB) {
       console.log("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
     } else {
-      console.log("indexedDB Ready")
+      //console.log("indexedDB Ready")
       var request = window.indexedDB.open("timetab", 1);
       request.onerror = function (event) {
         console.error("Error opening IndexedDB")
@@ -213,7 +212,7 @@ function TimeTab(props) {
       }
 
       request.onupgradeneeded = function (event) {
-        console.log("IndexedDB created or updated")
+        //console.log("IndexedDB created or updated")
         let db = event.target.result;
         db.createObjectStore('images');
         changeImage(db)
