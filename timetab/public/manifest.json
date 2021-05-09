@@ -25,9 +25,6 @@
         "service_worker": "service_workers.js"
     },
     "permissions": [
-        "activeTab",
-        "storage",
-        "geolocation",
-        "notifications"
+        "geolocation"
     ]
 }
