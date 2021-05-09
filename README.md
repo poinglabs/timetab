@@ -7,6 +7,10 @@ A beautiful new tab page to take control of your time.
 
 ## Changelog
 
+### v0.0.3 (09.05.2021)
+
+ - Adjusted extension permissions
+
 ### v0.0.2
 
  - Timer bubbles for common durations
