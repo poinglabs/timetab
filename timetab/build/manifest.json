@@ -3,7 +3,7 @@
     "name": "timetab",
     "short_name": "timetab",
     "description": "New tab page",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "chrome_url_overrides": {
         "newtab": "index.html"
     },
