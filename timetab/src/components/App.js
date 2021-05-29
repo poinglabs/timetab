@@ -1,6 +1,12 @@
 import React, { Suspense, useState, useEffect } from 'react';
+import { Switch, Route, Link, useLocation, useHistory } from "react-router-dom";
+import { useTransition, animated } from 'react-spring'
 import '../css/App.css';
+
 import Welcome from './Welcome';
+import TenMinutesBlocks from './TenMinutesBlocks';
+import YearProgress from './YearProgress';
+
 import Settings from './Settings';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -29,7 +35,7 @@ function Footer(props) {
   )
 }
 
-function TimeTab(props) {
+function App() {
 
   // states
 
@@ -40,12 +46,12 @@ function TimeTab(props) {
   const [theme, setTheme] = useState(null)
 
   const defaultLocation = store.get('location') || { "lat": 0, "lng": 0, "autodetect": true, "error": null }
-  const [location, setLocation] = useState(defaultLocation)
+  const [locationGeo, setLocationGeo] = useState(defaultLocation)
 
   const [photoAutor, setphotoAutor] = useState(null)
   const [photoUrl, setphotoUrl] = useState(null)
 
-  const [sunCalcTimes, setSunCalcTimes] = useState(SunCalc.getTimes(new Date(), location.lat, location.lng))
+  const [sunCalcTimes, setSunCalcTimes] = useState(SunCalc.getTimes(new Date(), locationGeo.lat, locationGeo.lng))
 
   const [settingsIsOpen, setSettingsOpen] = useState(false)
 
@@ -53,7 +59,7 @@ function TimeTab(props) {
 
   const { i18n } = useTranslation();
   let moonIllumination = SunCalc.getMoonIllumination(new Date());
-  let moonParallacticAngle = SunCalc.getMoonPosition(new Date(), location.lat, location.lng).parallacticAngle
+  let moonParallacticAngle = SunCalc.getMoonPosition(new Date(), locationGeo.lat, locationGeo.lng).parallacticAngle
 
   const modalCustomStyles = {
     content: {
@@ -71,7 +77,28 @@ function TimeTab(props) {
     }
   };
 
+  const location = useLocation();
+  let history = useHistory();
+
+  console.log(location)
+
+  const transitions = useTransition(location, {
+    from: { opacity: 0, transform: "translate(100%,0)" },
+    enter: { opacity: 1, transform: "translate(0%,0)" },
+    leave: { opacity: 0, transform: "translate(-100%,0)" }
+  });
+
   //functions
+
+  const switchView = (e) => {
+    if (e.keyCode == 32) {
+
+      const views = ["/", "/ten-minutes-blocks", "/year-progress"]
+      let index = views.indexOf(location.pathname)
+      let new_index = index === views.length - 1 ? 0 : index + 1
+      history.push(views[new_index]);
+    }
+  }
 
   const openSettingsModal = () => {
     logEvent("ui_interaction", {
@@ -127,12 +154,12 @@ function TimeTab(props) {
     let loc = store.get("location")
     loc[keys[1]] = (typeof value) == "string" ? parseFloat(value) : value
     store.set("location", loc)
-    setLocation(store.get('location'))
-    setSunCalcTimes(SunCalc.getTimes(new Date(), location.lat, location.lng))
+    setLocationGeo(store.get('location'))
+    setSunCalcTimes(SunCalc.getTimes(new Date(), locationGeo.lat, locationGeo.lng))
   };
 
   // init
-  store.set('location', location)
+  store.set('location', locationGeo)
   Modal.setAppElement('#app')
 
 
@@ -162,7 +189,7 @@ function TimeTab(props) {
       loc["autodetect"] = false
       loc["error"] = err.code
       store.set("location", loc)
-      setLocation(store.get('location'))
+      setLocationGeo(store.get('location'))
 
       logEvent("error", {
         "error_place": "app",
@@ -185,7 +212,7 @@ function TimeTab(props) {
           "lng": position.coords.longitude,
           "autodetect": true
         }
-        setLocation(loc)
+        setLocationGeo(loc)
         setSunCalcTimes(SunCalc.getTimes(new Date(), loc.lat, loc.lng))
         store.set('location', loc)
       }, geoError, options);
@@ -342,7 +369,7 @@ function TimeTab(props) {
 
                         //console.log(imageUrl);
                         //document.documentElement.style.setProperty("--background-image", `url(data:image/jpeg;base64,${imageUrl})`);
-                        
+
                         var img = new Image();
 
                         img.onload = function () {
@@ -378,9 +405,18 @@ function TimeTab(props) {
   }, [theme]);
 
   return (
-    <div className="main">
-
-      <Welcome times={sunCalcTimes} locationOn={location.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle} />
+    <div className="main" tabIndex="0" onKeyDown={(e) => { switchView(e) }}>
+      <div className="views">
+        {transitions((props, item) => (
+          <animated.div style={props}>
+            <Switch location={item}>
+              <Route exact path="/" ><Welcome times={sunCalcTimes} locationOn={locationGeo.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle} /></Route>
+              <Route exact path="/ten-minutes-blocks"><TenMinutesBlocks /></Route>
+              <Route exact path="/year-progress"><YearProgress /></Route>
+            </Switch>
+          </animated.div>
+        ))}
+      </div>
       <Footer photoAuthor={photoAutor} photoUrl={photoUrl} openSettings={openSettingsModal} />
       <Modal
         isOpen={settingsIsOpen}
@@ -389,23 +425,10 @@ function TimeTab(props) {
         onRequestClose={closeSettingsModal}
         style={modalCustomStyles}
         contentLabel="Example Modal"
-      ><Settings location={location} closeSettings={closeSettingsModal} changeLocation={changeLocation} changeLanguagee={changeLanguage} themes={themes} themeProps={themeProperties} backgroundImages={themeImages} changeTheme={changeTheme} /></Modal>
-    </div>
+      ><Settings location={locationGeo} closeSettings={closeSettingsModal} changeLocation={changeLocation} changeLanguagee={changeLanguage} themes={themes} themeProps={themeProperties} backgroundImages={themeImages} changeTheme={changeTheme} /></Modal>
+    </div >
   );
 }
 
-// loading component for suspense fallback
-const Loader = () => (
-  <div>
-    <div>loading...</div>
-  </div>
-);
-
-export default function App() {
-  return (
-    <Suspense fallback={<Loader />}>
-      <TimeTab />
-    </Suspense>
-  );
-}
+export default App;
 

@@ -5,13 +5,19 @@
   height: 100%;
 }
 
-.welcome {
-    padding: 5%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.views {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+}
+
+.views > div {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-items: center;
 }
 
 /* Settings */
