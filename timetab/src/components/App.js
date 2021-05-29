@@ -80,12 +80,11 @@ function App() {
   const location = useLocation();
   let history = useHistory();
 
-  console.log(location)
-
   const transitions = useTransition(location, {
-    from: { opacity: 0, transform: "translate(100%,0)" },
-    enter: { opacity: 1, transform: "translate(0%,0)" },
-    leave: { opacity: 0, transform: "translate(-100%,0)" }
+    from: { opacity: 0, transform: "translate3d(0,-50%,0)" },
+    enter: { opacity: 1, transform: "translate3d(0,0%,0)" },
+    leave: { opacity: 0, transform: "translate3d(0,50%,0)" },
+    config: { tension: 80, friction: 12 }
   });
 
   //functions
