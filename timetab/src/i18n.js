@@ -31,6 +31,31 @@ const resources = {
         "timerNotification" : "Timer of {{minutes}} minutes ended!",
         "timerNotificationTitle" : "Timer ended!"
       },
+      "time":{
+        "weekdays":{
+          "0":"Sunday",
+          "1":"Monday",
+          "2":"Tuesday",
+          "3":"Wednesday",
+          "4":"Thursday",
+          "5":"Friday",
+          "6":"Saturday"
+        },
+        "months":{
+          "0":"January",
+          "1":"February",
+          "2":"March",
+          "3":"April",
+          "4":"May",
+          "5":"June",
+          "6":"July",
+          "7":"August",
+          "8":"September",
+          "9":"October",
+          "10":"November",
+          "11":"December"
+        }
+      },
       "sunhours": {
         "beforeSunset": "Sunset in <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutes",
         "beforeSunrise": "Sunrise in <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutes"
@@ -71,6 +96,31 @@ const resources = {
         "timerNotification" : "Timer de {{minutes}} minutos terminó!",
         "timerNotificationTitle" : "Tiempo terminó!"
       },
+      "time":{
+        "weekdays":{
+          "0":"Domingo",
+          "1":"Lunes",
+          "2":"Martes",
+          "3":"Miercoles",
+          "4":"Jueves",
+          "5":"Viernes",
+          "6":"Sábado"
+        },
+        "months":{
+          "0":"Enero",
+          "1":"Febrero",
+          "2":"Marzo",
+          "3":"Abril",
+          "4":"Mayo",
+          "5":"Junio",
+          "6":"Julio",
+          "7":"Agosto",
+          "8":"Septiembre",
+          "9":"Octubre",
+          "10":"Noviembre",
+          "11":"Deciembre"
+        }
+      },
       "sunhours": {
         "beforeSunset": "Quedan <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutos de sol",
         "beforeSunrise": "Amanece en <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutos"
@@ -110,6 +160,31 @@ const resources = {
       "clock":{
         "timerNotification" : "{{minutes}}-Minuten-Takt beendet",
         "timerNotificationTitle" : "Timer beendet!"
+      },
+      "time":{
+        "weekdays":{
+          "0":"Sontag",
+          "1":"Montag",
+          "2":"Dienstag",
+          "3":"Mittwoch",
+          "4":"Donerstag",
+          "5":"Freitag",
+          "6":"Samstag"
+        },
+        "months":{
+          "0":"Januar",
+          "1":"Februar",
+          "2":"Marz",
+          "3":"April",
+          "4":"Mai",
+          "5":"Juni",
+          "6":"Juli",
+          "7":"August",
+          "8":"September",
+          "9":"Oktober",
+          "10":"November",
+          "11":"Dezember"
+        }
       },
       "sunhours": {
         "beforeSunset": "Sonnenuntergang in <1 className='sun-hours__info-minutes'>{{minutes}}</1> Minuten",

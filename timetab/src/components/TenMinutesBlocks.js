@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../css/TenMinutesBlocks.css';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import NightsStay from '@material-ui/icons/NightsStay';
+import { useTranslation } from 'react-i18next';
 
 function Block(props) {
   let classes = ["l-day-blocks__block"]
@@ -16,14 +17,25 @@ function Block(props) {
       return ""
     }
   }
+  const getHour = () => {
+    if ((props.id -1) % 12 == 0) {
+    return <div className="hour hour-left">{2*(props.id -1) / 12}</div>
+    } else if ((props.id +12) % 12 == 0) {
+      return <div className="hour hour-right">{(2*(props.id +12) / 12)-2}</div>
+    } else {
+      return ""
+    }
+  }
   
   return (
-    <div className={classes.join(" ")}>{getIcon()}</div>
+    <div className={classes.join(" ")}>{getHour()}</div>
   )
 }
 
 
 function TenMinutesBlocks(props) {
+
+  const { i18n } = useTranslation();
 
   const block_minutes = 10
   const total_blocks = 24 * 60 / block_minutes
@@ -38,14 +50,15 @@ function TenMinutesBlocks(props) {
   const now = new Date();
   const now_min = now.getHours() * 60 + now.getMinutes();
 
-  var wd = "getWeekDay(now)"
+  var wd = i18n.t("time.weekdays."+now.getDay().toString())
   var d = now.getDate()
-  var m = "getMonth(now)"
+  var m = i18n.t("time.months."+now.getMonth().toString())
   var y = now.getFullYear()
 
   return (
     <div style={props.style} id="ten-minutes-blocks" className="l-day-blocks">
-      <div class='l-day-blocks__title'>{wd} {d} {m} in 10 minutes blocks</div>
+      <div class='l-day-blocks__title'>{wd} {d} {m}</div>
+      <div class='l-day-blocks__subtitle'>in 10 minutes blocks</div>
       <div class='l-day-blocks__block-cont'>
         <div class='l-day-blocks__block-container'>
           {
@@ -55,6 +68,7 @@ function TenMinutesBlocks(props) {
           }
         </div>
       </div>
+      <div class='l-day-blocks__footer'>Why is this useful?</div>
     </div>
   );
 }

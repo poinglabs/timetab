@@ -20,11 +20,24 @@
 }
 
 .l-day-blocks .l-day-blocks__title {
+  font-size: 24px;
+  margin-bottom: 14px;
+  font-family: var(--font-main);
+  color: var(--color-on-background);
+  text-shadow: var(--color-on-background-shadow) 1px 1px 2px;
+}
+.l-day-blocks .l-day-blocks__subtitle {
   font-size: 18px;
   margin-bottom: 28px;
   font-family: var(--font-main);
   color: var(--color-on-background);
   text-shadow: var(--color-on-background-shadow) 1px 1px 2px;
+}
+.l-day-blocks .l-day-blocks__footer {
+  font-size: 14px;
+  margin-top: 28px;
+  font-family: var(--font-main);
+  color: var(--color-on-background);
 }
 
 .l-day-blocks .l-day-blocks__block-cont {
@@ -58,6 +71,8 @@
   justify-content: center;
   align-items: center;
   justify-items: center;
+  overflow: visible;
+  position: relative;
 }
 .past {
   transform: scale(0.9);
@@ -87,8 +102,24 @@
   transform: rotate(45deg);
 }
 
-
-
 .night {
   opacity: 0.6;
+}
+
+.hour {
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-main);
+  color: var(--color-on-background);
+  text-shadow: var(--color-on-background-shadow) 1px 1px 2px;
+  font-size: 12px;
+  position: absolute;
+}
+
+.hour-left {
+  transform: translateX(-100%);
+}
+
+.hour-right {
+  transform: translateX(100%);
 }
