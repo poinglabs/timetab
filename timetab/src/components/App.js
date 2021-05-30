@@ -410,7 +410,7 @@ function App() {
           <animated.div style={props}>
             <Switch location={item}>
               <Route exact path="/" ><Welcome times={sunCalcTimes} locationOn={locationGeo.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle} /></Route>
-              <Route exact path="/ten-minutes-blocks"><TenMinutesBlocks /></Route>
+              <Route exact path="/ten-minutes-blocks"><TenMinutesBlocks times={sunCalcTimes} locationOn={locationGeo.autodetect}/></Route>
               <Route exact path="/year-progress"><YearProgress /></Route>
             </Switch>
           </animated.div>
