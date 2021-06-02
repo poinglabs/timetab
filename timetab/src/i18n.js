@@ -70,7 +70,9 @@ const resources = {
         "lastQuarter" : "Last Quarter",
         "waningCresent" : "Waning Crescent"
       },
-      "photoBy" : "Photo by"
+      "photoBy" : "Photo by",
+      "blocksQuestion" : "How is this useful?",
+      "inTenMinBlock" : "in 10 minutes blocks"
   },
   },
   es: {
@@ -135,7 +137,9 @@ const resources = {
         "lastQuarter" : "Cuarto menguante",
         "waningCresent" : "Luna menguante"
       },
-      "photoBy" : "Foto de"
+      "photoBy" : "Foto de",
+      "blocksQuestion" : "¿Qué utilidad tiene esto?",
+      "inTenMinBlock" : "en bloques de 10 minutos"
   },
   },
   de: {
@@ -200,7 +204,9 @@ const resources = {
         "lastQuarter" : "abnehmender Halbmond",
         "waningCresent" : "letztes Viertel bzw. abnehmende Sichel"
       },
-      "photoBy" : "Foto von"
+      "photoBy" : "Foto von",
+      "blocksQuestion" : "Wie nützlich ist das?",
+      "inTenMinBlock" : "in 10-Minuten-Blöcken"
   },
   },
 };
