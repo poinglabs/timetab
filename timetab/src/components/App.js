@@ -6,6 +6,7 @@ import '../css/App.css';
 import Welcome from './Welcome';
 import TenMinutesBlocks from './TenMinutesBlocks';
 import YearProgress from './YearProgress';
+import MonthsColumns from './MonthsColumns';
 
 import Settings from './Settings';
 import { useTranslation, Trans } from 'react-i18next';
@@ -92,7 +93,7 @@ function App() {
   const switchView = (e) => {
     if (e.keyCode == 32) {
 
-      const views = ["/", "/ten-minutes-blocks", "/year-progress"]
+      const views = ["/", "/ten-minutes-blocks", "/year-progress", "/months-columns"]
       let index = views.indexOf(location.pathname)
       let new_index = index === views.length - 1 ? 0 : index + 1
       history.push(views[new_index]);
@@ -412,6 +413,7 @@ function App() {
               <Route exact path="/" ><Welcome times={sunCalcTimes} locationOn={locationGeo.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle} /></Route>
               <Route exact path="/ten-minutes-blocks"><TenMinutesBlocks times={sunCalcTimes} locationOn={locationGeo.autodetect}/></Route>
               <Route exact path="/year-progress"><YearProgress /></Route>
+              <Route exact path="/months-columns"><MonthsColumns /></Route>
             </Switch>
           </animated.div>
         ))}
