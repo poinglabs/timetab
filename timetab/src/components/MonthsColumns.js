@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../css/MonthsColumns.css';
 import { useTranslation, Trans } from 'react-i18next';
-
+import Slider from '@material-ui/core/Slider';
 
 function Day(props) {
   const { i18n } = useTranslation();
@@ -57,7 +57,7 @@ function Month(props) {
   return (
     <div className="month-column">
       <div className="month-title">{formatMonth(props.month)} {year.substr(2, 2)}</div>
-      <div>{month_days.map((day) => { return <Day date={day} /> })}</div>
+      <div className="day-container">{month_days.map((day) => { return <Day date={day} /> })}</div>
     </div>
   )
 
@@ -69,20 +69,21 @@ function MonthsColumns(props) {
 
   const { i18n } = useTranslation();
 
+  const [months, setMonths] = useState(6)
+
   const now = new Date();
   const month = now.getMonth();
   const year = now.getFullYear();
 
-
   const getMonthsArray = (month, year) => {
-    let months = []
-    for (let i = 0; i < 10; i++) {
+    let monthsArray = []
+    for (let i = 0; i < months; i++) {
       let m = {}
       m["month"] = month + i > 11 ? month + i - 12 : month + i
       m["year"] = month + i > 11 ? year + 1 : year
-      months.push(m)
+      monthsArray.push(m)
     }
-    return months
+    return monthsArray
   }
 
   const monthsArray = getMonthsArray(month, year)
@@ -90,8 +91,19 @@ function MonthsColumns(props) {
 
   return (
     <div style={props.style} id="months-columns">
-      <div className="months-columns-title"></div>
-      <div className="months-container">
+      <div className="months-columns-title">
+      <Slider
+        defaultValue={6}
+        aria-labelledby="discrete-slider"
+        valueLabelDisplay="auto"
+        step={1}
+        marks
+        min={3}
+        max={12}
+        onChange={(e, value) => {setMonths(value)}}
+      />
+      </div>
+      <div className="months-container" style={{"gridTemplateColumns" : "repeat("+months+", auto)"}}>
         {monthsArray.map((m) => { return <Month month={m["month"]} year={m["year"]} /> })}
       </div>
       <div className="footer">
