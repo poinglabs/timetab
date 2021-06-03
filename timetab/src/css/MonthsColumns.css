@@ -10,6 +10,13 @@
   justify-content: center;
 }
 
+.month-title {
+  color: var(--color-on-background);
+  text-shadow: var(--color-on-background-shadow) 1px 1px 2px;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
 .months-container {
   margin: 5% auto;
   width: 90%;
@@ -17,12 +24,12 @@
   height: 100%;
   position: relative;
   display: grid;
-  grid-template-columns: repeat(12, auto);
+  grid-template-columns: repeat(10, auto);
 }
 
 .month-column {
   display: inline-block;
-  background-color: white;
+  
   height: 100%;
   margin:auto 8px;
   border-radius: 8px;
@@ -31,6 +38,47 @@
   padding-top: 10%;
   font-size: 16px;
   color: black;
+}
+
+.month-day {
+  text-align:left;
+  padding: 0 8px;
+  background-color: white;
+  opacity: 0.4;
+}
+
+.month-day__wd {
+  display: inline-flex;
+  width: 18px;
+  justify-items: center;
+  align-content: flex-start;
+  font-size: 10px;
+}
+
+.month-day__wn {
+  display: inline-flex;
+  width: 25px;
+  font-size: 14px;
+  justify-items: center;
+  align-content: flex-start;
+}
+
+
+.month-day--first {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.month-day--weekend {
+  opacity: 0.8;
+}
+.month-day--past {
+  opacity: 0.1;
+}
+
+
+.month-day--last {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .title, .footer {

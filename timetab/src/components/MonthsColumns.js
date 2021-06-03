@@ -3,14 +3,62 @@ import '../css/MonthsColumns.css';
 import { useTranslation, Trans } from 'react-i18next';
 
 
+function Day(props) {
+  const { i18n } = useTranslation();
+
+  const date = props.date;
+  const weekday = date.getDay()
+  const day = date.getDate()
+
+  let classes = ["month-day"]
+
+  const isWeekend = weekday === 0 || weekday === 6
+  if (isWeekend) { classes.push("month-day--weekend") }
+
+  const isPast = date < new Date()
+  if (isPast) { classes.push("month-day--past") }
+
+  let firstofnextmonth = new Date(date.getYear(), date.getMonth() + 1, 1)
+  firstofnextmonth.setDate(firstofnextmonth.getDate() - 1);
+
+  if (day === 1) { classes.push("month-day--first") }
+  if (day === firstofnextmonth.getDate()) { classes.push("month-day--last") }
+
+  const formatWeekDay = (weekday) => {
+    return i18n.t("time.weekdays." + weekday.toString()).substr(0, 1)
+  }
+
+  return (
+    <div className={classes.join(" ")}>
+      <div className="month-day__wd">{formatWeekDay(weekday)}</div>
+      <div className="month-day__wn">{day}</div>
+    </div>
+  )
+
+}
+
 function Month(props) {
   const { i18n } = useTranslation();
   const formatMonth = (month) => {
     return i18n.t("time.months." + month.toString()).substr(0, 3)
   }
+  const getDaysInMonth = (month, year) => {
+    var date = new Date(year, month, 1);
+    var days = [];
+    while (date.getMonth() === month) {
+      days.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+    return days;
+  }
+  const month_days = getDaysInMonth(props.month, props.year)
+  const year = props.year.toString()
 
   return (
-    <div className="month-column">{formatMonth(props.month)} {props.year}</div>
+    <div className="month-column">
+      <div className="month-title">{formatMonth(props.month)} {year.substr(2, 2)}</div>
+      <div>{month_days.map((day) => { return <Day date={day} /> })}</div>
+    </div>
   )
 
 }
@@ -28,7 +76,7 @@ function MonthsColumns(props) {
 
   const getMonthsArray = (month, year) => {
     let months = []
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 10; i++) {
       let m = {}
       m["month"] = month + i > 11 ? month + i - 12 : month + i
       m["year"] = month + i > 11 ? year + 1 : year
@@ -42,9 +90,9 @@ function MonthsColumns(props) {
 
   return (
     <div style={props.style} id="months-columns">
-      <div className="title"></div>
+      <div className="months-columns-title"></div>
       <div className="months-container">
-          {monthsArray.map((m) => { return <Month month={m["month"]} year={m["year"]} /> })}
+        {monthsArray.map((m) => { return <Month month={m["month"]} year={m["year"]} /> })}
       </div>
       <div className="footer">
       </div>
