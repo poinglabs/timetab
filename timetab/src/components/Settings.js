@@ -1,7 +1,7 @@
 
 import '../css/Settings.css';
 //import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';

@@ -15,7 +15,7 @@ function Day(props) {
   const isWeekend = weekday === 0 || weekday === 6
   if (isWeekend) { classes.push("month-day--weekend") }
 
-  const isPast = date < new Date()
+  const isPast = date < new Date().setHours(0,0,0,0)
   if (isPast) { classes.push("month-day--past") }
 
   let firstofnextmonth = new Date(date.getYear(), date.getMonth() + 1, 1)
@@ -63,13 +63,11 @@ function Month(props) {
 
 }
 
-
-
 function MonthsColumns(props) {
 
   const { i18n } = useTranslation();
 
-  const [months, setMonths] = useState(6)
+  const [months, setMonths] = useState(4)
 
   const now = new Date();
   const month = now.getMonth();
@@ -93,7 +91,7 @@ function MonthsColumns(props) {
     <div style={props.style} id="months-columns">
       <div className="months-columns-title">
       <Slider
-        defaultValue={6}
+        defaultValue={4}
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"
         step={1}
