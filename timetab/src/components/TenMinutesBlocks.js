@@ -6,8 +6,8 @@ import { useTranslation, Trans } from 'react-i18next';
 
 function Block(props) {
   let classes = ["l-day-blocks__block"]
-  if (props.id * props.block_minutes < props.now_min) { classes.push("past") }
-  if (props.id < props.sunrise_index || props.id > props.sunset_index) { classes.push("night") }
+  if (props.id * props.block_minutes < props.now_min) { classes.push("l-day-blocks__block--past") }
+  if (props.id < props.sunrise_index || props.id > props.sunset_index) { classes.push("l-day-blocks__block--night") }
   const getIcon = () => {
     if (props.id == props.sunrise_index) {
         return <WbSunnyIcon className="icon" style={{ fontSize: 24 }} />
@@ -19,9 +19,9 @@ function Block(props) {
   }
   const getHour = () => {
     if ((props.id -1) % 12 == 0) {
-    return <div className="hour hour-left">{2*(props.id -1) / 12}</div>
+    return <div className="l-day-blocks__block__hour l-day-blocks__block__hour--left">{2*(props.id -1) / 12}</div>
     } else if ((props.id +12) % 12 == 0) {
-      return <div className="hour hour-right">{(2*(props.id +12) / 12)-2}</div>
+      return <div className="l-day-blocks__block__hour l-day-blocks__block__hour--right">{(2*(props.id +12) / 12)-2}</div>
     } else {
       return ""
     }

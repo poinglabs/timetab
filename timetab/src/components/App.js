@@ -40,7 +40,7 @@ function Footer(props) {
 function App() {
 
   // states
-
+  
   const [themes, setThemes] = useState(null)
   const [themeProperties, setThemeProperties] = useState(null)
   const [themeImages, setThemeImages] = useState(null)
@@ -81,6 +81,7 @@ function App() {
 
   const location = useLocation();
   let history = useHistory();
+  
 
   const transitions = useTransition(location, {
     from: { opacity: 0, transform: "translate3d(0,-50%,0)" },
@@ -178,6 +179,7 @@ function App() {
         setThemeProperties(data2);
         setThemeImages(data3);
         initTheme(store.get('theme') || "default");
+        history.push("/");
       })
   }, []);
 
