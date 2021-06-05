@@ -29,25 +29,25 @@ function YearProgress(props) {
 
   return (
     <div style={props.style} id="year-progress">
-      <div className="title">{year}</div>
+      <div className="year-container__title">{year}</div>
       <div className="year-container">
-        <div className="progress-bar" style={{width:progress+"%"}}></div>
-        <div className="year">
-          <div className="month first">{formatMonth(0)}</div>
-          <div className="month">{formatMonth(1)}</div>
-          <div className="month">{formatMonth(2)}</div>
-          <div className="month">{formatMonth(3)}</div>
-          <div className="month">{formatMonth(4)}</div>
-          <div className="month">{formatMonth(5)}</div>
-          <div className="month">{formatMonth(6)}</div>
-          <div className="month">{formatMonth(7)}</div>
-          <div className="month">{formatMonth(8)}</div>
-          <div className="month">{formatMonth(9)}</div>
-          <div className="month">{formatMonth(10)}</div>
-          <div className="month last">{formatMonth(11)}</div>
+        <div className="year-container__progress-bar" style={{width:progress+"%"}}></div>
+        <div className="year-container__year">
+          <div className="year-container__month year-container__month--first">{formatMonth(0)}</div>
+          <div className="year-container__month">{formatMonth(1)}</div>
+          <div className="year-container__month">{formatMonth(2)}</div>
+          <div className="year-container__month">{formatMonth(3)}</div>
+          <div className="year-container__month">{formatMonth(4)}</div>
+          <div className="year-container__month">{formatMonth(5)}</div>
+          <div className="year-container__month">{formatMonth(6)}</div>
+          <div className="year-container__month">{formatMonth(7)}</div>
+          <div className="year-container__month">{formatMonth(8)}</div>
+          <div className="year-container__month">{formatMonth(9)}</div>
+          <div className="year-container__month">{formatMonth(10)}</div>
+          <div className="year-container__month year-container__month--last">{formatMonth(11)}</div>
         </div>
       </div>
-      <div className="footer">
+      <div className="year-container__footer">
         <p>{progress}%</p>
       </div>
 
