@@ -72,7 +72,10 @@ const resources = {
       },
       "photoBy" : "Photo by",
       "blocksQuestion" : "How is this useful?",
-      "inTenMinBlock" : "in 10 minutes blocks"
+      "inTenMinBlock" : "in 10 minutes blocks",
+      "enterBirthday" : "To view your life calendar, enter your date of birth",
+      "show" : "Show",
+      "lifeInWeeks" : "Your life in weeks"
   },
   },
   es: {
@@ -139,7 +142,10 @@ const resources = {
       },
       "photoBy" : "Foto de",
       "blocksQuestion" : "¿Qué utilidad tiene esto?",
-      "inTenMinBlock" : "en bloques de 10 minutos"
+      "inTenMinBlock" : "en bloques de 10 minutos",
+      "enterBirthday" : "Para ver tu calendario, ingresá tu fecha de nacimiento",
+      "show" : "Mostrar",
+      "lifeInWeeks" : "Tu vida en semanas"
   },
   },
   de: {
@@ -206,7 +212,10 @@ const resources = {
       },
       "photoBy" : "Foto von",
       "blocksQuestion" : "Wie nützlich ist das?",
-      "inTenMinBlock" : "in 10-Minuten-Blöcken"
+      "inTenMinBlock" : "in 10-Minuten-Blöcken",
+      "enterBirthday" : "Um deinen Kalender zu sehen, gib dein Geburtsdatum ein",
+      "show" : "Anzeigen",
+      "lifeInWeeks" : "Dein Leben in Wochen"
   },
   },
 };

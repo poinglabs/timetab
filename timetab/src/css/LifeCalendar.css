@@ -1,8 +1,3 @@
-#ten-minutes-blocks {
-
-}
-
-
 .l-life-blocks {
   padding: 5%;
   height: 100%;
@@ -27,16 +22,22 @@
   color: var(--color-on-background);
   text-shadow: var(--color-on-background-shadow) 1px 1px 2px;
 }
-.l-life-blocks .l-life-blocks__footer {
+
+.l-life-blocks .l-life-blocks__footer{
+  margin-top: 28px;
+}
+
+.l-life-blocks .l-life-blocks__footer a{
   font-size: 14px;
   margin-top: 28px;
   font-family: var(--font-main);
   color: var(--color-on-background);
+  text-decoration: none;
 }
 
 .l-life-blocks .l-life-blocks__block-cont {
   width: 90%;
-  height: calc(100% - 28px - 21px - 16px);
+  height: calc(100% - 28px - 16px);
   position: relative;
 }
 .l-life-blocks .l-life-blocks__block-cont:before {
@@ -56,7 +57,7 @@
 }
 
 .l-life-blocks .l-life-blocks__block-container .l-life-blocks__block {
-  background-color: var(--color-on-background);
+  background-color: var(--color-surface);
   border-radius: 2px;
   font-size: 10px;
   padding:0;
@@ -68,53 +69,25 @@
   overflow: visible;
   position: relative;
 }
-.past {
+.l-life-blocks__block--past {
   transform: scale(0.9);
   opacity: 0.4;
-  /*overflow: hidden;
-  position: relative;*/
-}
-/*
-.past:before, .past:after {
-  position: absolute;
-  content: '';
-  background: black;
-  opacity: 0.2;
-  display: block;
-  width: 100%;
-  height: 5%;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
 }
 
-.past:after {
-  -webkit-transform: rotate(45deg);    
-  transform: rotate(45deg);
-}
-*/
-.night {
-  opacity: 0.6;
-}
-
-.hour {
+.l-life-blocks__block__hour {
   width: 100%;
   text-align: center;
   font-family: var(--font-main);
   color: var(--color-on-background);
   text-shadow: var(--color-on-background-shadow) 1px 1px 2px;
-  font-size: 12px;
+  font-size: 10px;
   position: absolute;
 }
 
-.hour-left {
-  transform: translateX(-100%);
+.l-life-blocks__block__hour--left {
+  transform: translateX(-200%);
 }
 
-.hour-right {
-  transform: translateX(100%);
+.l-life-blocks__block__hour--right {
+  transform: translateX(200%);
 }

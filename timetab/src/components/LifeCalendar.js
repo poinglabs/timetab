@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import '../css/LifeCalendar.css';
-import WbSunnyIcon from '@material-ui/icons/WbSunny';
-import NightsStay from '@material-ui/icons/NightsStay';
 import { useTranslation, Trans } from 'react-i18next';
 
 import TextField from '@material-ui/core/TextField';
@@ -16,10 +14,21 @@ import store from 'store'
 function Block(props) {
   let classes = ["l-life-blocks__block"]
 
-  if (props.id < props.now_week) { classes.push("past") }
+  if (props.id < props.now_week) { classes.push("l-life-blocks__block--past") }
+
+  const getAge = () => {
+    if ((props.id -1) % 104 == 0) {
+    return <div className="l-life-blocks__block__hour l-life-blocks__block__hour--left">{(props.id -1) / 52}</div>
+    } else if ((props.id +104) % 104 == 0) {
+      return <div className="l-life-blocks__block__hour l-life-blocks__block__hour--right">{((props.id +52) / 52)-1}</div>
+    } else {
+      return ""
+    }
+  }
+
 
   return (
-    <div className={classes.join(" ")}></div>
+  <div className={classes.join(" ")}>{getAge()}</div>
   )
 }
 
@@ -37,8 +46,7 @@ function Calendar(props) {
 
   return (
     <React.Fragment>
-      <div className='l-life-blocks__title'>Your 90 year life in weeks</div>
-      <div className='l-life-blocks__subtitle'><Trans i18nKey="inTenMinBlock">...</Trans></div>
+      <div className='l-life-blocks__title'><Trans i18nKey="lifeInWeeks">Your life in weeks</Trans></div>
       <div className='l-life-blocks__block-cont'>
         <div className='l-life-blocks__block-container'>
           {
@@ -67,12 +75,12 @@ function LifeCalendar(props) {
   const renderPicker = () => {
     return (
 
-      <div>
-        <div class='l-life-blocks__title'>Please enter you birthday:</div>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <React.Fragment>
+        <div class='l-life-blocks__subtitle'><Trans i18nKey="enterBirthday">To view your life calendar, enter your date of birth</Trans></div>
+        <LocalizationProvider dateAdapter={AdapterDateFns} >
           <StaticDatePicker
             displayStaticWrapperAs="desktop"
-            openTo="day"
+            openTo="year"
             value={new Date(1990, 1, 6)}
             onChange={(newValue) => {
               setBirthdayPicker(newValue);
@@ -80,8 +88,9 @@ function LifeCalendar(props) {
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
-        <Button variant="contained" onClick={() => { saveBirthday(birthdayPicker) }}>Show</Button>
-      </div>
+        <div style={{"textAlign" : "center"}}><Button variant="contained" style={{"marginTop" : "8px"}} onClick={() => { saveBirthday(birthdayPicker) }}><Trans i18nKey="show">Show</Trans></Button></div>
+        
+        </React.Fragment>
     )
   }
 
@@ -89,8 +98,7 @@ function LifeCalendar(props) {
   return (
     <div style={props.style} id="l-life-blocks" className="l-life-blocks">
       {birthday ? <Calendar birthday={birthday}/> : renderPicker()}
-      <div class='l-life-blocks__footer'><a target="_blank" href="https://waitbutwhy.com/2016/10/100-blocks-day.html"><Trans i18nKey="blocksQuestion">How is this useful?</Trans></a></div>
-
+      <div class='l-life-blocks__footer'><a target="_blank" href="https://waitbutwhy.com/2014/05/life-weeks.html"><Trans i18nKey="blocksQuestion">How is this useful?</Trans></a></div>
     </div>
   );
 }
