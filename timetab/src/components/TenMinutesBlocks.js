@@ -40,7 +40,6 @@ function TenMinutesBlocks(props) {
   const block_minutes = 10
   const total_blocks = 24 * 60 / block_minutes
   const blocks = Array.from(Array(total_blocks).keys())
-  console.log(blocks)
 
   const times = props.times
   const sunriseHoursIndex = Math.floor((times.sunrise.getHours() * 60 + times.sunrise.getMinutes()) / 10) + 1

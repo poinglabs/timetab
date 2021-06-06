@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import '../css/MonthsColumns.css';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Slider from '@material-ui/core/Slider';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles({
+  root: {
+    color: "var(--color-on-background) !important",
+  }
+});
+
 
 function Day(props) {
   const { i18n } = useTranslation();
@@ -65,8 +73,6 @@ function Month(props) {
 
 function MonthsColumns(props) {
 
-  const { i18n } = useTranslation();
-
   const [months, setMonths] = useState(4)
 
   const now = new Date();
@@ -85,7 +91,8 @@ function MonthsColumns(props) {
   }
 
   const monthsArray = getMonthsArray(month, year)
-  console.log(monthsArray)
+
+  const classes = useStyles();
 
   return (
     <div style={props.style} id="months-columns">
@@ -93,9 +100,11 @@ function MonthsColumns(props) {
       <Slider
         defaultValue={4}
         aria-labelledby="discrete-slider"
-        valueLabelDisplay="auto"
+        valueLabelDisplay="off"
         step={1}
-        marks
+        classes={{
+          root: classes.root
+        }}
         min={3}
         max={12}
         onChange={(e, value) => {setMonths(value)}}
