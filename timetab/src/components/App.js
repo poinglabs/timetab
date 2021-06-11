@@ -27,6 +27,7 @@ import { logEvent } from './analytics';
 function Footer(props) {
   return (
     <footer>
+      {props.switchMessage == "true" ? <div className="container-space-bar">Press <span className="container-space-bar__space-bar blink">Space</span> for next view</div> : ""}
       <Grid container direction="row">
         <Grid className="photoby" item xs={6} >
           {props.photoAuthor ? (<React.Fragment><Trans i18nKey="photoBy">Photo by</Trans>&nbsp;<a href={props.photoUrl} rel="noreferrer" target="_blank">{props.photoAuthor}</a></React.Fragment>) : null}
@@ -49,6 +50,8 @@ function App() {
 
   const defaultLocation = store.get('location') || { "lat": 0, "lng": 0, "autodetect": true, "error": null }
   const [locationGeo, setLocationGeo] = useState(defaultLocation)
+
+  const [switchMessage, setSwitchMessage] = useState(store.get('switchMessage') || "true")
 
   const [photoAutor, setphotoAutor] = useState(null)
   const [photoUrl, setphotoUrl] = useState(null)
@@ -84,9 +87,9 @@ function App() {
   
 
   const transitions = useTransition(location, {
-    from: { opacity: 0, transform: "translate3d(0,-50%,0)" },
+    from: { opacity: 0, transform: "translate3d(0,-10%,0)" },
     enter: { opacity: 1, transform: "translate3d(0,0%,0)" },
-    leave: { opacity: 0, transform: "translate3d(0,50%,0)" },
+    leave: { opacity: 0, transform: "translate3d(0,10%,0)" },
     config: { tension: 80, friction: 12 }
   });
 
@@ -96,8 +99,19 @@ function App() {
     if (e.keyCode == 32) {
 
       const views = ["/", "/ten-minutes-blocks", "/year-progress", "/months-columns", "life-calendar"]
+      const blurView = [false, true, true, true, true]
       let index = views.indexOf(location.pathname)
       let new_index = index === views.length - 1 ? 0 : index + 1
+      if (blurView[new_index]) {
+        document.body.classList.add("blur")
+      } else {
+        document.body.classList.remove("blur")
+      }
+      if (new_index === views.length - 1) {
+        store.set('switchMessage', "false")
+        setSwitchMessage(false)
+      }
+
       history.push(views[new_index]);
     }
   }
@@ -166,7 +180,7 @@ function App() {
 
 
   useEffect(() => {
-
+    history.push("/");
     //console.log("fetch data")
     Promise.all([
       fetch('./themes/themes.json'),
@@ -179,7 +193,6 @@ function App() {
         setThemeProperties(data2);
         setThemeImages(data3);
         initTheme(store.get('theme') || "default");
-        history.push("/");
       })
   }, []);
 
@@ -419,11 +432,10 @@ function App() {
               <Route exact path="/months-columns"><MonthsColumns /></Route>
               <Route exact path="/life-calendar"><LifeCalendar times={sunCalcTimes} locationOn={locationGeo.autodetect}/></Route>
             </Switch>
-            
           </animated.div>
         ))}
       </div>
-      <Footer photoAuthor={photoAutor} photoUrl={photoUrl} openSettings={openSettingsModal} />
+      <Footer photoAuthor={photoAutor} photoUrl={photoUrl} openSettings={openSettingsModal} switchMessage={switchMessage} />
       <Modal
         isOpen={settingsIsOpen}
         //onAfterOpen={afterOpenModal}

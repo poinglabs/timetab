@@ -66,6 +66,40 @@ footer {
   color: var(--color-on-background);
 }
 
+footer .container-space-bar {
+  display: inline-block;
+  color: var(--color-on-background);
+  font-family: var(--font-main);
+  font-size: 12px;
+}
+footer .container-space-bar .container-space-bar__space-bar{
+  text-transform: uppercase;
+  opacity: 0;
+  padding: 5px 8px;
+  margin: 0 5px;
+  border: 1px solid grey;
+  color: rgb(31, 31, 31);
+  border-radius: 5px;
+  background-color: honeydew;
+  box-shadow: 0 2px rgb(80, 80, 80);
+  display: inline-block;
+}
+
+.blink {
+  animation: blink 1.5s linear infinite;
+}
+@keyframes blink {
+  0% { opacity: 0; }
+  45% { opacity: 1; }
+  55% { opacity: 1; }
+  100% { opacity: 0;}
+}
+
+
+
+
+
+
 .settings-button {
   color: var(--color-on-background);
   text-align: right;

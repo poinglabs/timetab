@@ -55,7 +55,7 @@ function TenMinutesBlocks(props) {
 
   return (
     <div style={props.style} id="ten-minutes-blocks" className="l-day-blocks">
-      <div class='l-day-blocks__title'>{wd} {d} {m}</div>
+      <div class='l-day-blocks__title'>{wd} {d}, {m}</div>
       <div class='l-day-blocks__subtitle'><Trans i18nKey="inTenMinBlock">in 10 minutes blocks</Trans></div>
       <div class='l-day-blocks__block-cont'>
         <div class='l-day-blocks__block-container'>
