@@ -44,7 +44,6 @@ function Day(props) {
   if (isWeekend) { classes.push("month-day--weekend")}
 
   let dateEvents = getEventsForDate(isoDate)
-  console.log(dateEvents)
   if (!isWeekend && _.find(dateEvents, 'holiday')) {classes.push("month-day--weekend")};
   
   const isPast = date < new Date().setHours(0,0,0,0)

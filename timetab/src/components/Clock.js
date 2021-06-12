@@ -72,7 +72,7 @@ function Clock(props) {
     })
   }
   const deleteTimer = () => {
-    if (document.getElementById('timer-remove')) document.getElementById('timer-remove').play();
+    //if (document.getElementById('timer-remove')) {document.getElementById('timer-remove').play();}
     setTimerTime(null)
     setTimerTimeRemaining(null)
     document.title = "timetab"
