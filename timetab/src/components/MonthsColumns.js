@@ -65,7 +65,7 @@ function Month(props) {
   return (
     <div className="month-column">
       <div className="month-title">{formatMonth(props.month)} {year.substr(2, 2)}</div>
-      <div className="day-container">{month_days.map((day) => { return <Day date={day} /> })}</div>
+      <div className="day-container">{month_days.map((day) => { return <Day date={day} key={day}/> })}</div>
     </div>
   )
 
@@ -111,7 +111,7 @@ function MonthsColumns(props) {
       />
       </div>
       <div className="months-container" style={{"gridTemplateColumns" : "repeat("+months+", auto)"}}>
-        {monthsArray.map((m) => { return <Month month={m["month"]} year={m["year"]} /> })}
+        {monthsArray.map((m) => { return <Month month={m["month"]} year={m["year"]} key={m["month"].toString()+m["year"].toString()}/> })}
       </div>
       <div className="footer">
       </div>

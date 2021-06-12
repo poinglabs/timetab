@@ -71,6 +71,7 @@ footer .container-space-bar {
   color: var(--color-on-background);
   font-family: var(--font-main);
   font-size: 12px;
+  transform: translateY(25px)
 }
 footer .container-space-bar .container-space-bar__space-bar{
   text-transform: uppercase;

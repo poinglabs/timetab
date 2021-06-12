@@ -1,26 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../css/TenMinutesBlocks.css';
-import WbSunnyIcon from '@material-ui/icons/WbSunny';
-import NightsStay from '@material-ui/icons/NightsStay';
 import { useTranslation, Trans } from 'react-i18next';
 
 function Block(props) {
   let classes = ["l-day-blocks__block"]
   if (props.id * props.block_minutes < props.now_min) { classes.push("l-day-blocks__block--past") }
   if (props.id < props.sunrise_index || props.id > props.sunset_index) { classes.push("l-day-blocks__block--night") }
-  const getIcon = () => {
-    if (props.id == props.sunrise_index) {
-        return <WbSunnyIcon className="icon" style={{ fontSize: 24 }} />
-    } else if (props.id == props.sunset_index) {
-      return <NightsStay className="icon" style={{ fontSize: 24 }} />
-    } else {
-      return ""
-    }
-  }
+  
   const getHour = () => {
-    if ((props.id -1) % 12 == 0) {
+    if ((props.id -1) % 12 === 0) {
     return <div className="l-day-blocks__block__hour l-day-blocks__block__hour--left">{2*(props.id -1) / 12}</div>
-    } else if ((props.id +12) % 12 == 0) {
+    } else if ((props.id +12) % 12 === 0) {
       return <div className="l-day-blocks__block__hour l-day-blocks__block__hour--right">{(2*(props.id +12) / 12)-2}</div>
     } else {
       return ""
@@ -51,14 +41,13 @@ function TenMinutesBlocks(props) {
   var wd = i18n.t("time.weekdays."+now.getDay().toString())
   var d = now.getDate()
   var m = i18n.t("time.months."+now.getMonth().toString())
-  var y = now.getFullYear()
 
   return (
     <div style={props.style} id="ten-minutes-blocks" className="l-day-blocks">
-      <div class='l-day-blocks__title'>{wd} {d}, {m}</div>
-      <div class='l-day-blocks__subtitle'><Trans i18nKey="inTenMinBlock">in 10 minutes blocks</Trans></div>
-      <div class='l-day-blocks__block-cont'>
-        <div class='l-day-blocks__block-container'>
+      <div className='l-day-blocks__title'>{wd} {d}, {m}</div>
+      <div className='l-day-blocks__subtitle'><Trans i18nKey="inTenMinBlock">in 10 minutes blocks</Trans></div>
+      <div className='l-day-blocks__block-cont'>
+        <div className='l-day-blocks__block-container'>
           {
             blocks.map((item, index) => {
               return <Block id={index + 1} key={index + 1} now_min={now_min} locationOn={props.locationOn} block_minutes={block_minutes} sunrise_index={sunriseHoursIndex} sunset_index={sunsetHoursIndex} />
@@ -66,7 +55,7 @@ function TenMinutesBlocks(props) {
           }
         </div>
       </div>
-      <div class='l-day-blocks__footer'><a target="_blank" href="https://waitbutwhy.com/2016/10/100-blocks-day.html"><Trans i18nKey="blocksQuestion">How is this useful?</Trans></a></div>
+      <div className='l-day-blocks__footer'><a target="_blank" rel="noreferrer" href="https://waitbutwhy.com/2016/10/100-blocks-day.html"><Trans i18nKey="blocksQuestion">How is this useful?</Trans></a></div>
 
     </div>
   );

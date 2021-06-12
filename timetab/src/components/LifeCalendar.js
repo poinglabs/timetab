@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../css/LifeCalendar.css';
-import { useTranslation, Trans } from 'react-i18next';
+import { Trans } from 'react-i18next';
 
 import TextField from '@material-ui/core/TextField';
 import AdapterDateFns from '@material-ui/lab/AdapterMoment';
@@ -17,9 +17,9 @@ function Block(props) {
   if (props.id < props.now_week) { classes.push("l-life-blocks__block--past") }
 
   const getAge = () => {
-    if ((props.id -1) % 104 == 0) {
+    if ((props.id -1) % 104 === 0) {
     return <div className="l-life-blocks__block__hour l-life-blocks__block__hour--left">{(props.id -1) / 52}</div>
-    } else if ((props.id +104) % 104 == 0) {
+    } else if ((props.id +104) % 104 === 0) {
       return <div className="l-life-blocks__block__hour l-life-blocks__block__hour--right">{((props.id +52) / 52)-1}</div>
     } else {
       return ""
@@ -34,7 +34,6 @@ function Block(props) {
 
 
 function Calendar(props) {
-  const { i18n } = useTranslation();
 
   const total_blocks = 52*90
   const blocks = Array.from(Array(total_blocks).keys())
@@ -76,7 +75,7 @@ function LifeCalendar(props) {
     return (
 
       <React.Fragment>
-        <div class='l-life-blocks__subtitle'><Trans i18nKey="enterBirthday">To view your life calendar, enter your date of birth</Trans></div>
+        <div className='l-life-blocks__subtitle'><Trans i18nKey="enterBirthday">To view your life calendar, enter your date of birth</Trans></div>
         <LocalizationProvider dateAdapter={AdapterDateFns} >
           <StaticDatePicker
             displayStaticWrapperAs="desktop"
@@ -98,7 +97,7 @@ function LifeCalendar(props) {
   return (
     <div style={props.style} id="l-life-blocks" className="l-life-blocks">
       {birthday ? <Calendar birthday={birthday}/> : renderPicker()}
-      <div class='l-life-blocks__footer'><a target="_blank" href="https://waitbutwhy.com/2014/05/life-weeks.html"><Trans i18nKey="blocksQuestion">How is this useful?</Trans></a></div>
+      <div className='l-life-blocks__footer'><a rel="noreferrer" target="_blank" href="https://waitbutwhy.com/2014/05/life-weeks.html"><Trans i18nKey="blocksQuestion">How is this useful?</Trans></a></div>
     </div>
   );
 }

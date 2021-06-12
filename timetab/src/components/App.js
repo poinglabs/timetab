@@ -1,5 +1,5 @@
-import React, { Suspense, useState, useEffect } from 'react';
-import { Switch, Route, Link, useLocation, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { useTransition, animated } from 'react-spring'
 import '../css/App.css';
 
@@ -27,7 +27,7 @@ import { logEvent } from './analytics';
 function Footer(props) {
   return (
     <footer>
-      {props.switchMessage == "true" ? <div className="container-space-bar">Press <span className="container-space-bar__space-bar blink">Space</span> for next view</div> : ""}
+      {props.switchMessage === "true" ? <div className="container-space-bar"><Trans i18nKey="pressSpace">Press <span className="container-space-bar__space-bar blink">Space</span> for next view</Trans></div> : ""}
       <Grid container direction="row">
         <Grid className="photoby" item xs={6} >
           {props.photoAuthor ? (<React.Fragment><Trans i18nKey="photoBy">Photo by</Trans>&nbsp;<a href={props.photoUrl} rel="noreferrer" target="_blank">{props.photoAuthor}</a></React.Fragment>) : null}
@@ -96,7 +96,7 @@ function App() {
   //functions
 
   const switchView = (e) => {
-    if (e.keyCode == 32) {
+    if (e.keyCode === 32) {
 
       const views = ["/", "/ten-minutes-blocks", "/year-progress", "/months-columns", "life-calendar"]
       const blurView = [false, true, true, true, true]
@@ -194,6 +194,7 @@ function App() {
         setThemeImages(data3);
         initTheme(store.get('theme') || "default");
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps  
   }, []);
 
   useEffect(() => {

@@ -75,7 +75,8 @@ const resources = {
       "inTenMinBlock" : "in 10 minutes blocks",
       "enterBirthday" : "To view your life calendar, enter your date of birth",
       "show" : "Show",
-      "lifeInWeeks" : "Your life in weeks"
+      "lifeInWeeks" : "Your life in weeks",
+      "pressSpace" : "Press <1 className='container-space-bar__space-bar blink'>Space</1> for next view"
   },
   },
   es: {
@@ -145,7 +146,8 @@ const resources = {
       "inTenMinBlock" : "en bloques de 10 minutos",
       "enterBirthday" : "Para ver tu calendario, ingresá tu fecha de nacimiento",
       "show" : "Mostrar",
-      "lifeInWeeks" : "Tu vida en semanas"
+      "lifeInWeeks" : "Tu vida en semanas",
+      "pressSpace" : "Presione <1 className='container-space-bar__space-bar blink'>Espacio</1> para siguiente vista"
   },
   },
   de: {
@@ -215,7 +217,8 @@ const resources = {
       "inTenMinBlock" : "in 10-Minuten-Blöcken",
       "enterBirthday" : "Um deinen Kalender zu sehen, gib dein Geburtsdatum ein",
       "show" : "Anzeigen",
-      "lifeInWeeks" : "Dein Leben in Wochen"
+      "lifeInWeeks" : "Dein Leben in Wochen",
+      "pressSpace" : "<1 className='container-space-bar__space-bar blink'>Leertaste</1> drücken für nächste Ansicht"
   },
   },
 };
