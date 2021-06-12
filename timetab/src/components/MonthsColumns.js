@@ -3,6 +3,10 @@ import '../css/MonthsColumns.css';
 import { useTranslation } from 'react-i18next';
 import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/styles';
+import moment from 'moment';
+import store from 'store'
+
+import _ from "lodash";
 
 const useStyles = makeStyles({
   root: {
@@ -14,15 +18,35 @@ const useStyles = makeStyles({
 function Day(props) {
   const { i18n } = useTranslation();
 
+  
+
+  const getEventsForDate = (isoDate) => {
+    if (store.get('events')) {
+      const events = store.get('events')
+      return  _.filter(events, function(o) { return o.day === isoDate});
+    } else {
+      return []
+    }
+  }
+
+  const formatWeekDay = (weekday) => {
+    return i18n.t("time.weekdays." + weekday.toString()).substr(0, 1)
+  }
+
   const date = props.date;
+  const isoDate = moment(date).format('YYYY-MM-DD')
   const weekday = date.getDay()
   const day = date.getDate()
 
   let classes = ["month-day"]
 
   const isWeekend = weekday === 0 || weekday === 6
-  if (isWeekend) { classes.push("month-day--weekend") }
+  if (isWeekend) { classes.push("month-day--weekend")}
 
+  let dateEvents = getEventsForDate(isoDate)
+  console.log(dateEvents)
+  if (!isWeekend && _.find(dateEvents, 'holiday')) {classes.push("month-day--weekend")};
+  
   const isPast = date < new Date().setHours(0,0,0,0)
   if (isPast) { classes.push("month-day--past") }
 
@@ -32,9 +56,7 @@ function Day(props) {
   if (day === 1) { classes.push("month-day--first") }
   if (day === firstofnextmonth.getDate()) { classes.push("month-day--last") }
 
-  const formatWeekDay = (weekday) => {
-    return i18n.t("time.weekdays." + weekday.toString()).substr(0, 1)
-  }
+  
 
   return (
     <div className={classes.join(" ")}>
