@@ -7,11 +7,21 @@ A beautiful new tab page to take control of your time.
 
 ## Changelog
 
+
+### v0.1.0 (20.06.2021)
+
+ - View switching
+ - Day in 10 min blocks view
+ - Year progress view
+ - Months columns view
+ - Life calendar view
+ - Advanced: read events from localstorage
+
 ### v0.0.3 (09.05.2021)
 
  - Adjusted extension permissions
 
-### v0.0.2
+### v0.0.2 (08.05.2021)
 
  - Timer bubbles for common durations
  - Timer notifications
@@ -21,7 +31,7 @@ A beautiful new tab page to take control of your time.
  - Reduced extension size by saving images in indexedDB
  - Better icons and screenshots
 
-### v0.0.1
+### v0.0.1 (22.03.2021)
 
  - Displays the time
  - Easy timer creation
