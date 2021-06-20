@@ -31,6 +31,31 @@ const resources = {
         "timerNotification" : "Timer of {{minutes}} minutes ended!",
         "timerNotificationTitle" : "Timer ended!"
       },
+      "time":{
+        "weekdays":{
+          "0":"Sunday",
+          "1":"Monday",
+          "2":"Tuesday",
+          "3":"Wednesday",
+          "4":"Thursday",
+          "5":"Friday",
+          "6":"Saturday"
+        },
+        "months":{
+          "0":"January",
+          "1":"February",
+          "2":"March",
+          "3":"April",
+          "4":"May",
+          "5":"June",
+          "6":"July",
+          "7":"August",
+          "8":"September",
+          "9":"October",
+          "10":"November",
+          "11":"December"
+        }
+      },
       "sunhours": {
         "beforeSunset": "Sunset in <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutes",
         "beforeSunrise": "Sunrise in <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutes"
@@ -45,7 +70,13 @@ const resources = {
         "lastQuarter" : "Last Quarter",
         "waningCresent" : "Waning Crescent"
       },
-      "photoBy" : "Photo by"
+      "photoBy" : "Photo by",
+      "blocksQuestion" : "How is this useful?",
+      "inTenMinBlock" : "in 10 minutes blocks",
+      "enterBirthday" : "To view your life calendar, enter your date of birth",
+      "show" : "Show",
+      "lifeInWeeks" : "Your life in weeks",
+      "pressSpace" : "Press <1 className='container-space-bar__space-bar blink'>Space</1> for next view"
   },
   },
   es: {
@@ -71,6 +102,31 @@ const resources = {
         "timerNotification" : "Timer de {{minutes}} minutos terminó!",
         "timerNotificationTitle" : "Tiempo terminó!"
       },
+      "time":{
+        "weekdays":{
+          "0":"Domingo",
+          "1":"Lunes",
+          "2":"Martes",
+          "3":"Miercoles",
+          "4":"Jueves",
+          "5":"Viernes",
+          "6":"Sábado"
+        },
+        "months":{
+          "0":"Enero",
+          "1":"Febrero",
+          "2":"Marzo",
+          "3":"Abril",
+          "4":"Mayo",
+          "5":"Junio",
+          "6":"Julio",
+          "7":"Agosto",
+          "8":"Septiembre",
+          "9":"Octubre",
+          "10":"Noviembre",
+          "11":"Deciembre"
+        }
+      },
       "sunhours": {
         "beforeSunset": "Quedan <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutos de sol",
         "beforeSunrise": "Amanece en <1 className='sun-hours__info-minutes'>{{minutes}}</1> minutos"
@@ -85,7 +141,13 @@ const resources = {
         "lastQuarter" : "Cuarto menguante",
         "waningCresent" : "Luna menguante"
       },
-      "photoBy" : "Foto de"
+      "photoBy" : "Foto de",
+      "blocksQuestion" : "¿Qué utilidad tiene esto?",
+      "inTenMinBlock" : "en bloques de 10 minutos",
+      "enterBirthday" : "Para ver tu calendario, ingresá tu fecha de nacimiento",
+      "show" : "Mostrar",
+      "lifeInWeeks" : "Tu vida en semanas",
+      "pressSpace" : "Presione <1 className='container-space-bar__space-bar blink'>Espacio</1> para siguiente vista"
   },
   },
   de: {
@@ -111,6 +173,31 @@ const resources = {
         "timerNotification" : "{{minutes}}-Minuten-Takt beendet",
         "timerNotificationTitle" : "Timer beendet!"
       },
+      "time":{
+        "weekdays":{
+          "0":"Sontag",
+          "1":"Montag",
+          "2":"Dienstag",
+          "3":"Mittwoch",
+          "4":"Donerstag",
+          "5":"Freitag",
+          "6":"Samstag"
+        },
+        "months":{
+          "0":"Januar",
+          "1":"Februar",
+          "2":"Marz",
+          "3":"April",
+          "4":"Mai",
+          "5":"Juni",
+          "6":"Juli",
+          "7":"August",
+          "8":"September",
+          "9":"Oktober",
+          "10":"November",
+          "11":"Dezember"
+        }
+      },
       "sunhours": {
         "beforeSunset": "Sonnenuntergang in <1 className='sun-hours__info-minutes'>{{minutes}}</1> Minuten",
         "beforeSunrise": "Sonnenaufgang in <1 className='sun-hours__info-minutes'>{{minutes}}</1> Minuten"
@@ -125,7 +212,13 @@ const resources = {
         "lastQuarter" : "abnehmender Halbmond",
         "waningCresent" : "letztes Viertel bzw. abnehmende Sichel"
       },
-      "photoBy" : "Foto von"
+      "photoBy" : "Foto von",
+      "blocksQuestion" : "Wie nützlich ist das?",
+      "inTenMinBlock" : "in 10-Minuten-Blöcken",
+      "enterBirthday" : "Um deinen Kalender zu sehen, gib dein Geburtsdatum ein",
+      "show" : "Anzeigen",
+      "lifeInWeeks" : "Dein Leben in Wochen",
+      "pressSpace" : "<1 className='container-space-bar__space-bar blink'>Leertaste</1> drücken für nächste Ansicht"
   },
   },
 };

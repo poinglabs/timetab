@@ -1,6 +1,14 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import { useTransition, animated } from 'react-spring'
 import '../css/App.css';
+
 import Welcome from './Welcome';
+import TenMinutesBlocks from './TenMinutesBlocks';
+import YearProgress from './YearProgress';
+import MonthsColumns from './MonthsColumns';
+import LifeCalendar from './LifeCalendar';
+
 import Settings from './Settings';
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -19,6 +27,7 @@ import { logEvent } from './analytics';
 function Footer(props) {
   return (
     <footer>
+      {props.switchMessage === "true" ? <div className="container-space-bar"><Trans i18nKey="pressSpace">Press <span className="container-space-bar__space-bar blink">Space</span> for next view</Trans></div> : ""}
       <Grid container direction="row">
         <Grid className="photoby" item xs={6} >
           {props.photoAuthor ? (<React.Fragment><Trans i18nKey="photoBy">Photo by</Trans>&nbsp;<a href={props.photoUrl} rel="noreferrer" target="_blank">{props.photoAuthor}</a></React.Fragment>) : null}
@@ -29,10 +38,10 @@ function Footer(props) {
   )
 }
 
-function TimeTab(props) {
+function App() {
 
   // states
-
+  
   const [themes, setThemes] = useState(null)
   const [themeProperties, setThemeProperties] = useState(null)
   const [themeImages, setThemeImages] = useState(null)
@@ -40,12 +49,14 @@ function TimeTab(props) {
   const [theme, setTheme] = useState(null)
 
   const defaultLocation = store.get('location') || { "lat": 0, "lng": 0, "autodetect": true, "error": null }
-  const [location, setLocation] = useState(defaultLocation)
+  const [locationGeo, setLocationGeo] = useState(defaultLocation)
+
+  const [switchMessage, setSwitchMessage] = useState(store.get('switchMessage') || "true")
 
   const [photoAutor, setphotoAutor] = useState(null)
   const [photoUrl, setphotoUrl] = useState(null)
 
-  const [sunCalcTimes, setSunCalcTimes] = useState(SunCalc.getTimes(new Date(), location.lat, location.lng))
+  const [sunCalcTimes, setSunCalcTimes] = useState(SunCalc.getTimes(new Date(), locationGeo.lat, locationGeo.lng))
 
   const [settingsIsOpen, setSettingsOpen] = useState(false)
 
@@ -53,7 +64,7 @@ function TimeTab(props) {
 
   const { i18n } = useTranslation();
   let moonIllumination = SunCalc.getMoonIllumination(new Date());
-  let moonParallacticAngle = SunCalc.getMoonPosition(new Date(), location.lat, location.lng).parallacticAngle
+  let moonParallacticAngle = SunCalc.getMoonPosition(new Date(), locationGeo.lat, locationGeo.lng).parallacticAngle
 
   const modalCustomStyles = {
     content: {
@@ -71,7 +82,39 @@ function TimeTab(props) {
     }
   };
 
+  const location = useLocation();
+  let history = useHistory();
+  
+
+  const transitions = useTransition(location, {
+    from: { opacity: 0, transform: "translate3d(0,-10%,0)" },
+    enter: { opacity: 1, transform: "translate3d(0,0%,0)" },
+    leave: { opacity: 0, transform: "translate3d(0,10%,0)" },
+    config: { tension: 80, friction: 12 }
+  });
+
   //functions
+
+  const switchView = (e) => {
+    if (e.keyCode === 32) {
+
+      const views = ["/", "/ten-minutes-blocks", "/year-progress", "/months-columns", "life-calendar"]
+      const blurView = [false, true, true, true, true]
+      let index = views.indexOf(location.pathname)
+      let new_index = index === views.length - 1 ? 0 : index + 1
+      if (blurView[new_index]) {
+        document.body.classList.add("blur")
+      } else {
+        document.body.classList.remove("blur")
+      }
+      if (new_index === views.length - 1) {
+        store.set('switchMessage', "false")
+        setSwitchMessage(false)
+      }
+
+      history.push(views[new_index]);
+    }
+  }
 
   const openSettingsModal = () => {
     logEvent("ui_interaction", {
@@ -127,17 +170,17 @@ function TimeTab(props) {
     let loc = store.get("location")
     loc[keys[1]] = (typeof value) == "string" ? parseFloat(value) : value
     store.set("location", loc)
-    setLocation(store.get('location'))
-    setSunCalcTimes(SunCalc.getTimes(new Date(), location.lat, location.lng))
+    setLocationGeo(store.get('location'))
+    setSunCalcTimes(SunCalc.getTimes(new Date(), locationGeo.lat, locationGeo.lng))
   };
 
   // init
-  store.set('location', location)
+  store.set('location', locationGeo)
   Modal.setAppElement('#app')
 
 
   useEffect(() => {
-
+    history.push("/");
     //console.log("fetch data")
     Promise.all([
       fetch('./themes/themes.json'),
@@ -151,6 +194,7 @@ function TimeTab(props) {
         setThemeImages(data3);
         initTheme(store.get('theme') || "default");
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps  
   }, []);
 
   useEffect(() => {
@@ -162,7 +206,7 @@ function TimeTab(props) {
       loc["autodetect"] = false
       loc["error"] = err.code
       store.set("location", loc)
-      setLocation(store.get('location'))
+      setLocationGeo(store.get('location'))
 
       logEvent("error", {
         "error_place": "app",
@@ -185,7 +229,7 @@ function TimeTab(props) {
           "lng": position.coords.longitude,
           "autodetect": true
         }
-        setLocation(loc)
+        setLocationGeo(loc)
         setSunCalcTimes(SunCalc.getTimes(new Date(), loc.lat, loc.lng))
         store.set('location', loc)
       }, geoError, options);
@@ -342,7 +386,7 @@ function TimeTab(props) {
 
                         //console.log(imageUrl);
                         //document.documentElement.style.setProperty("--background-image", `url(data:image/jpeg;base64,${imageUrl})`);
-                        
+
                         var img = new Image();
 
                         img.onload = function () {
@@ -378,10 +422,21 @@ function TimeTab(props) {
   }, [theme]);
 
   return (
-    <div className="main">
-
-      <Welcome times={sunCalcTimes} locationOn={location.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle} />
-      <Footer photoAuthor={photoAutor} photoUrl={photoUrl} openSettings={openSettingsModal} />
+    <div className="main" tabIndex="0" onKeyDown={(e) => { switchView(e) }}>
+      <div className="views">
+        {transitions((props, item) => (
+          <animated.div style={props}>
+            <Switch location={item}>
+              <Route exact path="/" ><Welcome times={sunCalcTimes} locationOn={locationGeo.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle} /></Route>
+              <Route exact path="/ten-minutes-blocks"><TenMinutesBlocks times={sunCalcTimes} locationOn={locationGeo.autodetect}/></Route>
+              <Route exact path="/year-progress"><YearProgress /></Route>
+              <Route exact path="/months-columns"><MonthsColumns /></Route>
+              <Route exact path="/life-calendar"><LifeCalendar times={sunCalcTimes} locationOn={locationGeo.autodetect}/></Route>
+            </Switch>
+          </animated.div>
+        ))}
+      </div>
+      <Footer photoAuthor={photoAutor} photoUrl={photoUrl} openSettings={openSettingsModal} switchMessage={switchMessage} />
       <Modal
         isOpen={settingsIsOpen}
         //onAfterOpen={afterOpenModal}
@@ -389,23 +444,10 @@ function TimeTab(props) {
         onRequestClose={closeSettingsModal}
         style={modalCustomStyles}
         contentLabel="Example Modal"
-      ><Settings location={location} closeSettings={closeSettingsModal} changeLocation={changeLocation} changeLanguagee={changeLanguage} themes={themes} themeProps={themeProperties} backgroundImages={themeImages} changeTheme={changeTheme} /></Modal>
-    </div>
+      ><Settings location={locationGeo} closeSettings={closeSettingsModal} changeLocation={changeLocation} changeLanguagee={changeLanguage} themes={themes} themeProps={themeProperties} backgroundImages={themeImages} changeTheme={changeTheme} /></Modal>
+    </div >
   );
 }
 
-// loading component for suspense fallback
-const Loader = () => (
-  <div>
-    <div>loading...</div>
-  </div>
-);
-
-export default function App() {
-  return (
-    <Suspense fallback={<Loader />}>
-      <TimeTab />
-    </Suspense>
-  );
-}
+export default App;
 

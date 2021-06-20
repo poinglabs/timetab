@@ -1,7 +1,7 @@
 
 import '../css/Settings.css';
 //import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
@@ -113,7 +113,7 @@ function Settings(props) {
     }
 
     return (
-      <Paper variant="outlined" className={activeTheme === item.name ? classesThemesActive.root : classesThemes.root} key={item.name} elevation={elevation} onClick={() => props.changeTheme(item.name)}>
+      <Paper className={activeTheme === item.name ? classesThemesActive.root : classesThemes.root} key={item.name} elevation={elevation} onClick={() => props.changeTheme(item.name)}>
         <h3><Trans i18nKey={"themes." + item.name}>{item.name}</Trans></h3>
         <div className="theme-box--img" style={t_style}></div>
       </Paper>)

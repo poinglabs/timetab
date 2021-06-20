@@ -23,7 +23,7 @@ function Welcome(props) {
   let activeBubble = null
 
   const createTimerBubbles = () => {
-
+    
     const minutes = [5, 15, 25, 45, 60]
 
     const distance = 0.4 * height
@@ -40,7 +40,7 @@ function Welcome(props) {
       bubbles.push(<div key={min} style={{ top: yy, left: xx }} onMouseLeave={(e) => mouseBubbleLeave(min)} onMouseEnter={(e) => mouseBubbleEnter(min)} className="timer-bubble">{min}<br /><span>min</span></div>)
     }
     return bubbles
-
+    
   }
 
   const mouseBubbleEnter = (min) => {
@@ -146,7 +146,7 @@ function Welcome(props) {
   }
 
   return (
-    <div id="welcome" onMouseUp={(e) => mouseUp(e)} onMouseMove={(e) => mouseMove(e)}>
+    <div id="welcome" style={props.style} onMouseUp={(e) => mouseUp(e)} onMouseMove={(e) => mouseMove(e)}>
       <div id="timer-tooltip"></div>
 
       {createTimerBubbles()}

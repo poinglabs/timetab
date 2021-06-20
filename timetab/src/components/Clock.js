@@ -72,7 +72,7 @@ function Clock(props) {
     })
   }
   const deleteTimer = () => {
-    document.getElementById('timer-remove').play();
+    //if (document.getElementById('timer-remove')) {document.getElementById('timer-remove').play();}
     setTimerTime(null)
     setTimerTimeRemaining(null)
     document.title = "timetab"
@@ -98,6 +98,15 @@ function Clock(props) {
   useEffect(() => {
     previousTimerTimeRef.current = props.timerTime;
   });
+
+  useEffect(() => {
+  
+    // returned function will be called on component unmount 
+    return () => {
+      deleteTimer()
+    }
+  }, [])
+
 
   return (
     <React.Fragment>

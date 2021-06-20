@@ -1,0 +1,78 @@
+#year-progress {
+  padding: 0;
+  display: flex;
+  font-size: 40px;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.year-container {
+  margin: 10px auto;
+  width: 70%;
+  height: 100px;
+  border-radius: 50px;
+  background-color: var(--color-surface);
+  opacity: 0.5;
+  position: relative;
+}
+
+.year-container__year {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, auto);
+}
+.year-container__progress-bar {
+  position: absolute;
+  left: 0;
+  width: 60%;
+  height: 5px;
+  border-radius: 2.5px;
+  margin: 47.5px 0;
+  padding:0;
+  background-color: var(--color-on-surface);
+}
+
+.year-container__month {
+  display: inline-block;
+  text-align: center;
+  font-family: var(--font-main);
+  margin: 15% 0;
+  padding-top: 5%;
+  font-size: 16px;
+  color: var(--color-on-surface);
+  border-right: 1px dashed var(--color-on-surface);
+}
+
+.year-container__month--first {
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+}
+
+.year-container__month--last {
+  border-bottom-right-radius: 50%;
+  border-top-right-radius: 50%;
+  border-right: none;
+}
+
+.year-container__title, .year-container__footer {
+  text-align: center;
+  font-family: var(--font-main);
+  text-shadow: var(--color-on-background-shadow) 1px 1px 4px;
+  color: var(--color-on-background);
+}
+
+.year-container__title {
+  margin-bottom: 20px;
+}
+
+.year-container__footer p {
+  margin: 16px 16px;
+  font-size: 24px;
+}
+
+
