@@ -5,8 +5,35 @@ A beautiful new tab page to take control of your time.
 [Download Extension](https://chrome.google.com/webstore/detail/timetab/liobdfgkcgpgfeoemlcoelichpjpbkhe)
 
 
+## Events
+
+Add a key "events" in localStorage with the following value shema:
+
+```json
+[
+    {
+        "day": "2022-02-17",
+        "description": "feriado",
+        "holiday": true
+    },
+    {
+        "day": "2021-08-17",
+        "description": "",
+        "holiday": false
+    },{
+        "day": "2021-09-17",
+        "description": "",
+        "holiday": true
+    }
+]
+```
+
 ## Changelog
 
+### v0.1.1 (05.01.2022)
+
+ - Random first view
+ - Show event description in Month Columns
 
 ### v0.1.0 (20.06.2021)
 
