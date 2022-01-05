@@ -61,6 +61,7 @@ function Day(props) {
     <div className={classes.join(" ")}>
       <div className="month-day__wd">{formatWeekDay(weekday)}</div>
       <div className="month-day__wn">{day}</div>
+      text
     </div>
   )
 
