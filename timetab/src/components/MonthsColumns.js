@@ -44,6 +44,7 @@ function Day(props) {
   if (isWeekend) { classes.push("month-day--weekend")}
 
   let dateEvents = getEventsForDate(isoDate)
+  console.log(dateEvents)
   if (!isWeekend && _.find(dateEvents, 'holiday')) {classes.push("month-day--weekend")};
   
   const isPast = date < new Date().setHours(0,0,0,0)
@@ -55,13 +56,14 @@ function Day(props) {
   if (day === 1) { classes.push("month-day--first") }
   if (day === firstofnextmonth.getDate()) { classes.push("month-day--last") }
 
+  let eventText = dateEvents.length ? dateEvents[0]["description"] : "" //dateEvents[0]['decription']
   
 
   return (
     <div className={classes.join(" ")}>
       <div className="month-day__wd">{formatWeekDay(weekday)}</div>
       <div className="month-day__wn">{day}</div>
-      text
+      {eventText}
     </div>
   )
 
