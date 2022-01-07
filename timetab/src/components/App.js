@@ -95,18 +95,31 @@ function App() {
 
   //functions
 
+  const views = ["/", "/ten-minutes-blocks", "/year-progress", "/months-columns", "life-calendar"]
+  const views_blur = [false, true, true, true, true]
+  const view_weights = [0,0,0,0,1,1,2,2,3,3]
+
+  const blurView = (view_index) => {
+    if (views_blur[view_index]) {
+      document.body.classList.add("blur")
+    } else {
+      document.body.classList.remove("blur")
+    }
+  }
+
+  const pushRandomView = () => {
+    let random_index = Math.floor(Math.random() * (9 - 0 + 1) + 0)
+    let push_index = view_weights[random_index]
+    blurView(push_index)
+    history.push(views[push_index])
+  }
+
   const switchView = (e) => {
     if (e.keyCode === 32) {
 
-      const views = ["/", "/ten-minutes-blocks", "/year-progress", "/months-columns", "life-calendar"]
-      const blurView = [false, true, true, true, true]
       let index = views.indexOf(location.pathname)
       let new_index = index === views.length - 1 ? 0 : index + 1
-      if (blurView[new_index]) {
-        document.body.classList.add("blur")
-      } else {
-        document.body.classList.remove("blur")
-      }
+      blurView(new_index)
       if (new_index === views.length - 1) {
         store.set('switchMessage', "false")
         setSwitchMessage(false)
@@ -180,7 +193,8 @@ function App() {
 
 
   useEffect(() => {
-    history.push("/");
+    pushRandomView()
+    //history.push("/ten-minutes-blocks");
     //console.log("fetch data")
     Promise.all([
       fetch('./themes/themes.json'),
