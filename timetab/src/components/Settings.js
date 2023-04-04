@@ -11,6 +11,12 @@ import Paper from '@material-ui/core/Paper';
 //import FormControlLabel from '@material-ui/core/FormControlLabel';
 //import Switch from '@material-ui/core/Switch';
 //import {useTranslation, Trans } from 'react-i18next';
+
+import axios from 'axios';
+
+import { useState, useEffect } from 'react';
+import { FormControl, InputLabel, Select, MenuItem, Button } from '@material-ui/core';
+
 import { Trans } from 'react-i18next';
 import store from 'store'
 import _ from "lodash";
@@ -102,6 +108,37 @@ function Settings(props) {
   const activeLang = store.get("i18nextLng")
   const activeTheme = store.get("theme")
 
+  const [selectedCountryCode, setSelectedCountryCode] = useState('defaultCountryCode');
+  const [countryList, setCountryList] = useState([]);
+
+  const fetchCountryList = async () => {
+    try {
+      const response = await fetch('https://us-central1-poing-timetab.cloudfunctions.net/holidays_get_countries');
+      const data = await response.json();
+      setCountryList(data.countries);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCountryList();
+  }, []);
+
+  const [output, setOutput] = useState('');
+
+  const handleImportHolidays = async () => {
+    try {
+      const response = await axios.get(`/endpoint?countryCode=${selectedCountryCode}`);
+      setOutput(response.data);
+    } catch (error) {
+      console.error(error);
+      setOutput('Error fetching data');
+    }
+  };
+
+
+
   function renderTheme(item) {
     let t_style;
     const elevation = activeTheme === item.name ? 7 : 1;
@@ -166,6 +203,30 @@ function Settings(props) {
         <div>
           {props.themes.map(renderTheme)}
         </div>
+      </section>
+      <section>
+        <h2>
+          <Trans i18nKey="settings.holidays">Holidays</Trans>
+        </h2>
+        <div className="please-share">Import the holidays of <strong>one</strong> country for the current and following year ({new Date().getFullYear()}, {new Date().getFullYear() + 1}), they will be display in the Month Columns and Next Holiday view. You can also mark additional holidays in MonthsColumns view.</div>
+        <div>
+        <FormControl>
+          <Select
+            value={selectedCountryCode || 'AR'}
+            onChange={(event) => setSelectedCountryCode(event.target.value)}
+          >
+            <MenuItem key="default" value="defaultCountryCode" disabled>Select a country</MenuItem>
+            {countryList.map((country) => (
+              <MenuItem key={country.countryCode} value={country.countryCode}>
+                {country.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Button onClick={handleImportHolidays}>Import holidays</Button>
+        <Button>Delete holidays</Button>
+        </div>
+        <div>{output}</div>
       </section>
       <section>
 
