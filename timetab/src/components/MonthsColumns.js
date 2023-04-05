@@ -17,8 +17,7 @@ const useStyles = makeStyles({
 
 function Day(props) {
   const { i18n } = useTranslation();
-
-  
+  const forceUpdate = React.useReducer(() => ({}))[1]
 
   const getEventsForDate = (isoDate) => {
     if (store.get('events')) {
@@ -38,13 +37,13 @@ function Day(props) {
   const weekday = date.getDay()
   const day = date.getDate()
 
+
   let classes = ["month-day"]
 
   const isWeekend = weekday === 0 || weekday === 6
   if (isWeekend) { classes.push("month-day--weekend")}
 
   let dateEvents = getEventsForDate(isoDate)
-  console.log(dateEvents)
   if (!isWeekend && _.find(dateEvents, 'holiday')) {classes.push("month-day--weekend")};
   
   const isPast = date < new Date().setHours(0,0,0,0)
@@ -56,14 +55,42 @@ function Day(props) {
   if (day === 1) { classes.push("month-day--first") }
   if (day === firstofnextmonth.getDate()) { classes.push("month-day--last") }
 
-  let eventText = dateEvents.length ? dateEvents[0]["description"] : "" //dateEvents[0]['decription']
+  //let eventText = dateEvents.length ? dateEvents[0]["description"] : "" //dateEvents[0]['decription']
+  let eventDots = '・'.repeat(dateEvents.length);
+  let eventText = dateEvents.map(event => event.description).join('\n');
+
+  const handleToggleHoliday = () => {
+
+    const isHoliday = dateEvents.some(event => event.holiday);
+    const existingEvents = JSON.parse(localStorage.getItem('events'));
+
+    if (isHoliday) {
+
+      const filteredEvents = _.filter(existingEvents, (event) => {
+        const isSameDay = event.day === isoDate
+        const isImported = event.imported === true
+        const hasDescription = event.description !== ""
+        return !isSameDay || isImported || hasDescription;
+      });
   
+      // Stringify and store the new array back in localStorage
+      localStorage.setItem('events', JSON.stringify(filteredEvents));
+    
+    } else if (!isWeekend) {
+      // not holiday, add holiday
+      const newEvents = [{"day":isoDate,"description":"","holiday":true}]
+      const updatedEvents = _.concat(existingEvents, newEvents);
+      localStorage.setItem('events', JSON.stringify(updatedEvents));
+    }
+    
+    forceUpdate()
+  };
 
   return (
     <div className={classes.join(" ")}>
-      <div className="month-day__wd">{formatWeekDay(weekday)}</div>
+      <div className="month-day__wd" onClick={handleToggleHoliday}>{formatWeekDay(weekday)}</div>
       <div className="month-day__wn">{day}</div>
-      {eventText}
+      <div title={eventText}>{eventDots}</div>
     </div>
   )
 

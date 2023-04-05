@@ -1,17 +1,18 @@
 import requests
 from google.cloud import firestore
-import datetime
+from datetime import datetime, timedelta
 
 def get_public_holidays(request):
     # Get the countryCode parameter from the request
     countryCode = request.args.get('countryCode')
+    year = str(request.args.get('year'))
+
+    print(f'Get holiday {countryCode} {year}')
 
     if not countryCode:
         return ('Error: Missing countryCode parameter', 400)
 
     db = firestore.Client()
-
-    year = str(datetime.datetime.now().year)
 
     # Check if a collection with the countryCode ID exists
     collection_ref = db.collection(countryCode+year)
@@ -24,9 +25,32 @@ def get_public_holidays(request):
     if response.status_code != 200:
         print(f'Request failed with status code {response.status_code}')
         return ('Error: Unable to retrieve public holidays', 500)
-
-    # Save the holidays to Firestore
     holidays = response.json()
+
+     # Make a request to the Nager.Date API to get bridge days 
+    response = requests.get(f'https://date.nager.at/api/v3/LongWeekend/{year}/{countryCode}')
+    if response.status_code != 200:
+        print(f'Request failed with status code {response.status_code}')
+        return ('Error: Unable to retrieve long weekends', 500)
+    long_weekends = response.json()
+
+    bridge_days = []
+    for long_weekend in long_weekends:
+        bridge_day = find_bridge_day(long_weekend, holidays)
+        if bridge_day is not None:
+            bridge_holiday = {
+                "date": bridge_day,
+                "localName": "Bridge day",
+                "name": "Bridge Day",
+                "countryCode": countryCode
+            }
+            bridge_days.append(bridge_holiday)
+    
+    print(bridge_days)
+    
+    holidays = holidays + bridge_days
+    
+    # Save the holidays to Firestore
     for holiday in holidays:
         collection_ref.add(holiday)
 
@@ -54,6 +78,29 @@ def handle_error(func):
             return (f'Error: {str(e)}', 500)
 
     return wrapper
+
+def find_bridge_day(long_weekend, public_holidays):
+    start_date = datetime.strptime(long_weekend["startDate"], "%Y-%m-%d")
+    end_date = datetime.strptime(long_weekend["endDate"], "%Y-%m-%d")
+    day_count = long_weekend["dayCount"]
+    need_bridge_day = long_weekend["needBridgeDay"]
+
+    # Check if a bridge day is needed
+    if not need_bridge_day:
+        return None
+
+    # Create a set of public holidays
+    public_holidays_set = set([datetime.strptime(h["date"], "%Y-%m-%d").date() for h in public_holidays])
+
+    # Find the bridge day
+    delta = timedelta(days=1)
+    current_date = start_date + delta
+    while current_date < end_date:
+        if current_date.weekday() < 5 and current_date.date() not in public_holidays_set:
+            return current_date.date().strftime('%Y-%m-%d')
+        current_date += delta
+
+    return None
 
 # Decorate the function with error handling
 get_public_holidays = handle_error(get_public_holidays)

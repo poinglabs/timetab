@@ -15,7 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 
 import { useState, useEffect } from 'react';
-import { FormControl, InputLabel, Select, MenuItem, Button } from '@material-ui/core';
+import { FormControl, Select, MenuItem, Button } from '@material-ui/core';
 
 import { Trans } from 'react-i18next';
 import store from 'store'
@@ -109,9 +109,16 @@ function Settings(props) {
   const activeTheme = store.get("theme")
 
   const [selectedCountryCode, setSelectedCountryCode] = useState('defaultCountryCode');
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [countryList, setCountryList] = useState([]);
 
   const fetchCountryList = async () => {
+
+    Promise.all([fetch('./data/countries.json')])
+      .then(([res1]) => Promise.all([res1.json()]))
+      .then(([data1]) => {setCountryList(data1.countries)})
+
+    /*
     try {
       const response = await fetch('https://us-central1-poing-timetab.cloudfunctions.net/holidays_get_countries');
       const data = await response.json();
@@ -119,6 +126,7 @@ function Settings(props) {
     } catch (error) {
       console.error(error);
     }
+    */
   };
 
   useEffect(() => {
@@ -129,15 +137,48 @@ function Settings(props) {
 
   const handleImportHolidays = async () => {
     try {
-      const response = await axios.get(`/endpoint?countryCode=${selectedCountryCode}`);
-      setOutput(response.data);
+      if (selectedCountryCode != "defaultCountryCode") {
+      
+      
+        setOutput('Importing...');
+        const response = await axios.get(`https://us-central1-poing-timetab.cloudfunctions.net/holidays_get_holidays?countryCode=${selectedCountryCode}&year=${selectedYear}`);
+        const newEvents = response.data["holidays"];
+        const existingEvents = JSON.parse(localStorage.getItem('events') || "[]");
+        const newEventsNumber = newEvents.length
+        const existingEventsNumber =existingEvents.length
+
+
+        if (newEventsNumber+existingEventsNumber < 100) {
+          
+          const updatedEvents = _.concat(existingEvents, newEvents);
+          localStorage.setItem('events', JSON.stringify(updatedEvents));
+          setOutput(`Success. ${newEventsNumber} holidays imported`);
+
+        } else {
+          setOutput(`Error. Too many events`);
+        }
+      } else {
+        setOutput(`Error. Please select a country`);
+      }
     } catch (error) {
       console.error(error);
       setOutput('Error fetching data');
     }
   };
 
+  const handleDeleteHolidays = () => {
+    // Retrieve the existing array from localStorage
+    const events = JSON.parse(localStorage.getItem('events'));
 
+    // Use lodash filter method to create a new array that contains only those events where the imported field is not true
+    const filteredEvents = _.filter(events, (event) => {
+      return event.imported !== true;
+    });
+
+    // Stringify and store the new array back in localStorage
+    localStorage.setItem('events', JSON.stringify(filteredEvents));
+    setOutput(`Success. Imported events deleted.`);
+  };
 
   function renderTheme(item) {
     let t_style;
@@ -208,10 +249,11 @@ function Settings(props) {
         <h2>
           <Trans i18nKey="settings.holidays">Holidays</Trans>
         </h2>
-        <div className="please-share">Import the holidays of <strong>one</strong> country for the current and following year ({new Date().getFullYear()}, {new Date().getFullYear() + 1}), they will be display in the Month Columns and Next Holiday view. You can also mark additional holidays in MonthsColumns view.</div>
+        <div className="please-share" style={{ marginBottom: "20px" }}>Import the holidays of a country, they will be display in the Month Columns and Next Holiday view. You can also mark additional holidays in MonthsColumns view.</div>
         <div>
-        <FormControl>
+        <FormControl >
           <Select
+            style={{ height: "40px", marginRight : "20px" }}
             value={selectedCountryCode || 'AR'}
             onChange={(event) => setSelectedCountryCode(event.target.value)}
           >
@@ -223,10 +265,24 @@ function Settings(props) {
             ))}
           </Select>
         </FormControl>
-        <Button onClick={handleImportHolidays}>Import holidays</Button>
-        <Button>Delete holidays</Button>
+        <FormControl >
+          <Select
+            style={{ height: "40px", marginRight : "20px" }}
+            value={selectedYear || new Date().getFullYear()}
+            onChange={(event) => setSelectedYear(event.target.value)}
+          >
+              <MenuItem key={new Date().getFullYear()} value={new Date().getFullYear()}>
+              {new Date().getFullYear().toString()}
+              </MenuItem>
+              <MenuItem key={new Date().getFullYear()+1} value={new Date().getFullYear()+1}>
+              {(new Date().getFullYear()+1).toString()}
+              </MenuItem>
+          </Select>
+        </FormControl>
+        <Button onClick={handleImportHolidays} style={{ height: "40px", marginRight : "20px" }} variant="contained" color="primary">Import</Button>
+        <Button onClick={handleDeleteHolidays} style={{ height: "40px" }}>Delete holidays</Button>
         </div>
-        <div>{output}</div>
+        <div className="please-share" style={{ marginBottom: "15px", marginTop: "15px" }}>{output}</div>
       </section>
       <section>
 
