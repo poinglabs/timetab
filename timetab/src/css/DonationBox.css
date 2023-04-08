@@ -62,7 +62,7 @@
 .address_box {
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     height: 40px;
     width: 450px;
 }

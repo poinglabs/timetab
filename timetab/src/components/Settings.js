@@ -173,7 +173,7 @@ function Settings(props) {
 
   const handleDeleteHolidays = () => {
     // Retrieve the existing array from localStorage
-    const events = JSON.parse(localStorage.getItem('events'));
+    const events = JSON.parse(localStorage.getItem('events')) || [];
 
     // Use lodash filter method to create a new array that contains only those events where the imported field is not true
     const filteredEvents = _.filter(events, (event) => {
@@ -297,7 +297,7 @@ function Settings(props) {
         </h2>
         <div className='donation-text'><Trans i18nKey="settings.donations.text">Have you ever wondered why programmers never see the sun?<br />Because they're busy creating tools like this extension! But seriously, if you like what we do, please consider supporting us with a donation so we can keep improving!</Trans></div>
         <div><DonationBox /></div>
-        <div className='developed-by'><Trans i18nKey="settings.donations.developedBy">'Timetab' is a product developed by <a target="_blank" href="https://poinglabs.com">Poing Labs.</a></Trans></div>
+        <div className='developed-by'><Trans i18nKey="settings.donations.developedBy">'Timetab' is a product developed by <a target="_blank" href="https://poinglabs.com" rel="noreferrer">Poing Labs.</a></Trans></div>
         </section>
       {!props.location.autodetect &&
           <section>

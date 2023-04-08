@@ -21,7 +21,7 @@ const resources = {
         "donations": {
           "title" : "Donations",
           "text" : "Have you ever wondered why programmers never see the sun?<1 />Because they're busy creating tools like this extension! But seriously, if you like what we do, please consider supporting us with a donation so we can keep improving!",
-          "developedBy" : "'Timetab' is a product developed by <1 target='_blank' href='https://poinglabs.com'>Poing Labs.</1>",
+          "developedBy" : "'Timetab' is a product developed by <1 target='_blank' rel='noreferrer' href='https://poinglabs.com'>Poing Labs.</1>",
           "mpButton" : "Donate 200 ARS"
         },
         "holidays": {
@@ -37,6 +37,12 @@ const resources = {
         },
         "pleaseShareLocation" : "Please enable location settings in your <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>browser</1> and OS to get the full theme experience",
         "locationOs" : "Important: If you're using Chrome on a Mac desktop, you may get a notification that 'Location is turned off in your Mac system preferences.' To update your computer's location preferences, follow the onscreen instructions."
+      },
+      "next-holiday": {
+        "title" : "Next holiday in",
+        "day" : "day",
+        "days" : "days",
+        "howto": "See <1 className='howto' onClick={{handleClickHowTo}}>How to add holidays</1> in Settings"
       },
       "themes" : {
         "default": "Mix",
@@ -110,7 +116,7 @@ const resources = {
         "donations": {
           "title" : "Donaciones",
           "text" : "¿Alguna vez te has preguntado por qué los programadores nunca ven el sol?<1 />¡Porque están ocupados creando herramientas como esta extensión! Pero en serio, si te gusta lo que hacemos, por favor considera apoyarnos con una donación para que podamos seguir mejorando.",
-          "developedBy" : "'Timetab' es un producto desarrollado por <1 target='_blank' href='https://poinglabs.com'>Poing Labs.</1>",
+          "developedBy" : "'Timetab' es un producto desarrollado por <1 target='_blank' rel='noreferrer' href='https://poinglabs.com'>Poing Labs.</1>",
           "mpButton" : "Donar 200 ARS"
         },
         "holidays": {
@@ -126,6 +132,12 @@ const resources = {
         },
         "pleaseShareLocation" : "Por favor active la configuración de ubicación en su <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>navegador</1> y sistema operativo para obtener la experiencia completa del tema",
         "locationOs" : "Importante: Si estás usando Chrome en un ordenador Mac, es posible que aparezca la notificación 'La ubicación está desactivada en las preferencias del sistema de Mac.' Para actualizar las preferencias de ubicación de tu ordenador, sigue las instrucciones que aparecen en pantalla."
+      },
+      "next-holiday": {
+        "title" : "Próximo feriado en",
+        "day" : "día",
+        "days" : "días",
+        "howto": "Ver <1 className='howto' onClick={{handleClickHowTo}}>Cómo agregar feriados</1> en Ajustes"
       },
       "themes" : {
         "default": "Variado",
@@ -199,7 +211,7 @@ const resources = {
         "donations": {
           "title" : "Spenden",
           "text" : "Hast du dich jemals gefragt, warum Programmierer niemals die Sonne sehen?<1 />Weil sie damit beschäftigt sind, Tools wie diese Erweiterung zu erstellen! Aber im Ernst, wenn dir gefällt, was wir tun, bitte unterstütze uns mit einer Spende, damit wir uns weiter verbessern können!",
-          "developedBy" : "'Timetab' ist ein Produkt, das von <1 target='_blank' href='https://poinglabs.com'>Poing Labs</1> entwickelt wurde.",
+          "developedBy" : "'Timetab' ist ein Produkt, das von <1 target='_blank' rel='noreferrer' href='https://poinglabs.com'>Poing Labs</1> entwickelt wurde.",
           "mpButton" : "200 ARS spenden"
         },
         "holidays": {
@@ -216,6 +228,12 @@ const resources = {
         },
         "pleaseShareLocation" : "Bitte aktivieren Sie die Standortseinstellungen in Ihrem <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>Browser</1> und Betriebssystem, um das Thema in vollem Umfang nutzen zu können",
         "locationOs" : "Wichtig: Wenn Sie Chrome auf einem Mac-Computer verwenden, wird Ihnen möglicherweise die Benachrichtigung „Standortermittlung ist in den Mac-Systemeinstellungen deaktiviert“ angezeigt. Folgen Sie der Anleitung auf dem Bildschirm, um die Standorteinstellungen auf Ihrem Computer zu aktualisieren."
+      },
+      "next-holiday": {
+        "title" : "Nächster Feiertag in",
+        "day" : "Tag",
+        "days" : "Tagen",
+        "howto": "Siehe <1 className='howto' onClick={{handleClickHowTo}}>Wie man Feiertage hinzufügt</1> in Einstellungen"
       },
       "themes" : {
         "default": "Mix",

@@ -1,0 +1,59 @@
+#next-holiday {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.next_holiday_box h2 {
+  text-align: center;
+  font-family: var(--font-main);
+  color: var(--color-on-background);
+  text-shadow: var(--color-on-background-shadow) 1px 1px 2px;
+}
+
+.next_holiday_box__days {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.next_holiday_box__days_number {
+  font-family: var(--font-main);
+  font-size: 68px;
+  text-align: center;
+  font-family: var(--font-main);
+  color: var(--color-on-background);
+  text-shadow: var(--color-on-background-shadow) 1px 1px 2px;
+}
+.next_holiday_box__days_text {
+  font-family: var(--font-main);
+  font-size: 20px;
+  text-align: center;
+  font-family: var(--font-main);
+  color: var(--color-on-background);
+}
+
+.next_holiday_detail {
+  font-family: var(--font-secondary);
+  font-size: 16px;
+  text-align: center;
+  margin-top: 30px;
+  font-weight: normal;
+  font-family: var(--font-main);
+  color: var(--color-on-background);
+  text-shadow: var(--color-on-background-shadow) 1px 1px 2px;
+}
+
+.next_holiday_detail .howto {
+  text-decoration: underline;
+}
+
+.next_holiday_detail .howto:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

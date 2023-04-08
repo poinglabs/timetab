@@ -1,5 +1,5 @@
 import '../css/DonationBox.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import _ from "lodash";
 import { Button } from '@material-ui/core';
 import icon_mp from '../img/payment_methods/icon_mercado_pago.png';
@@ -12,7 +12,7 @@ import { Trans } from 'react-i18next';
 function MercadoPagoButton(props) {
   return (
     <React.Fragment>
-      <span style={{marginRight: "15px"}}>Mercado Pago:</span><a className="mp-button" href={props.link} target="_blank"><Button style={{ height: "40px", marginRight : "20px" }} variant="contained" color="primary"><Trans i18nKey="settings.donations.mpButton">Donar $200</Trans></Button></a>
+      <span style={{marginRight: "15px"}}>Mercado Pago:</span><a className="mp-button" href={props.link} target="_blank" rel="noreferrer"><Button style={{ height: "40px", marginRight : "20px" }} variant="contained" color="primary"><Trans i18nKey="settings.donations.mpButton">Donar $200</Trans></Button></a>
     </React.Fragment>
   )
 }
@@ -52,16 +52,19 @@ function DonationBox(props) {
     {
       "name" : "MercadoPago",
       "icon" : icon_mp,
+      "alt" : "MP",
       "details" : <MercadoPagoButton link="https://mpago.la/2RAggZa"/>
     },
     {
       "name" : "Bitcoin",
       "icon" : icon_btc,
+      "alt" : "BTC",
       "details" : <CryptoAddress adress="1EzPiqijZYpnzDRDpMbjnaezBcQbH4iEVq" text="Bitcoin Network"/>
     },
     {
       "name" : "Theter",
       "icon" : icon_usdt,
+      "alt" : "USDT",
       "details" : <CryptoAddress adress="0xf63b4c6579a7fab95755365f8f9a9b80b6e92f15" text="Tether (USDT). Networks: Polygon (MATIC), BNB Smart Chain (BEP20) or Ethereum (ERC20)"/>
     }
   ]
@@ -75,7 +78,7 @@ function DonationBox(props) {
         <ul className='payment-methods'>
           {paymentMethods.map((method) => (
               <li key={method.name} onClick={() => setpaymentMethod(method.name)} className={`payment-method ${paymentMethod === method.name ? 'active' : ''}`} >
-                <img src={method.icon} />
+                <img src={method.icon} alt={method.alt}/>
               </li>
             ))}
         </ul>
