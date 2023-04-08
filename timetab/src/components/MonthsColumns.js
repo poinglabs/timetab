@@ -5,6 +5,8 @@ import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/styles';
 import moment from 'moment';
 import store from 'store'
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 import _ from "lodash";
 
@@ -55,30 +57,29 @@ function Day(props) {
   if (day === 1) { classes.push("month-day--first") }
   if (day === firstofnextmonth.getDate()) { classes.push("month-day--last") }
 
-  //let eventText = dateEvents.length ? dateEvents[0]["description"] : "" //dateEvents[0]['decription']
-  let eventDots = '・'.repeat(dateEvents.length);
-  let eventText = dateEvents.map(event => event.description).join('\n');
+  const handleDeleteEvent = (description) => {
+    console.log(description)
+    const existingEvents = JSON.parse(localStorage.getItem('events'));
+    const filteredEvents = _.filter(existingEvents, (event) => {
+      const isSameDay = event.day === isoDate
+      const isDescription = event.description === description
+      return !isSameDay || !isDescription;
+    });
+    console.log(filteredEvents)
+    // Stringify and store the new array back in localStorage
+    localStorage.setItem('events', JSON.stringify(filteredEvents));
+    forceUpdate()
+
+  }
 
   const handleToggleHoliday = () => {
 
     const isHoliday = dateEvents.some(event => event.holiday);
-    const existingEvents = JSON.parse(localStorage.getItem('events'));
+    const existingEvents = JSON.parse(localStorage.getItem('events')) || [];
 
-    if (isHoliday) {
-
-      const filteredEvents = _.filter(existingEvents, (event) => {
-        const isSameDay = event.day === isoDate
-        const isImported = event.imported === true
-        const hasDescription = event.description !== ""
-        return !isSameDay || isImported || hasDescription;
-      });
-  
-      // Stringify and store the new array back in localStorage
-      localStorage.setItem('events', JSON.stringify(filteredEvents));
-    
-    } else if (!isWeekend) {
+    if (!isWeekend && !isHoliday) {
       // not holiday, add holiday
-      const newEvents = [{"day":isoDate,"description":"","holiday":true}]
+      const newEvents = [{"day":isoDate, "description":"Free day", "holiday":true}]
       const updatedEvents = _.concat(existingEvents, newEvents);
       localStorage.setItem('events', JSON.stringify(updatedEvents));
     }
@@ -90,7 +91,10 @@ function Day(props) {
     <div className={classes.join(" ")}>
       <div className="month-day__wd" onClick={handleToggleHoliday}>{formatWeekDay(weekday)}</div>
       <div className="month-day__wn">{day}</div>
-      <div title={eventText}>{eventDots}</div>
+      <div className="month-day__event">{
+      dateEvents.map((ev) => { return <Tooltip title={ev.description} classes={{ tooltip: classes.tooltip }}>
+        <span onClick={() => handleDeleteEvent(ev.description)}>•</span></Tooltip> })
+    }</div>
     </div>
   )
 

@@ -7,6 +7,17 @@
       "latitude":"Latitude",
       "longitude":"Longitude",
       "autodetect":"Autodetect",
+      "holidays": {
+        "title": "Holidays",
+        "description" : "Import public holidays of a country, they will be display in the Month Columns and Next Holiday view. Please note that there may be some errors in the imported holidays. See <1 href='#' onClick={handleShowHolidayInstruction} style={{textDecoration: 'underline', pointer: 'cursor'}}>how to add or remove holidays</1>.",
+        "import": "",
+        "delete": "",
+        "select": "",
+        "howto_title": "",
+        "howto_add": "",
+        "howto_delete": "",
+        "howto_advanced": ""
+      },
       "pleaseShareLocation" : "Please share your <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>location</1>"
     },
     "themes" : {

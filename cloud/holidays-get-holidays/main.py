@@ -4,6 +4,9 @@ from google.oauth2 import id_token
 import requests
 import json
 import datetime
+from error_manager import ErrorManager
+
+error_manager = ErrorManager("get_holidays")
 
 def main(request):
 
@@ -41,12 +44,13 @@ def main(request):
     # If holidays collection does not exist, call holidays_save_holidays function
     if len(docs) == 0:
         # Set up authentication headers
-        url = f'https://us-central1-poing-timetab.cloudfunctions.net/holidays_save_holidays?countryCode={country_code}&year={year}'
-        headersf = {'Authorization': f'Bearer {id_token.fetch_id_token(Request(), audience=url)}'}
+        url_base = 'https://us-central1-poing-timetab.cloudfunctions.net/holidays_save_holidays'
+        url = f'{url_base}?countryCode={country_code}&year={year}'
+        headersf = {'Authorization': f'Bearer {id_token.fetch_id_token(Request(), audience=url_base)}'}
 
         # Call holidays_save_holidays function
         response = requests.get(url, headers=headersf)
-        print(response.status_code)
+        print(f'Error calling save_holidays. Code: ${response.status_code}. Error: ${response.text}')
         # Check if response was successful
         if response.status_code != 200:
             return (f'Error creating holidays collection for {country_code}{year}', 500, headers)
@@ -72,3 +76,20 @@ def main(request):
 
     # Return JSON object
     return (json.dumps(output), 200, headers)
+
+
+# Handle errors and print traceback
+def handle_error(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            err_msg = f'Error: {str(e)}'
+            error_manager.report(err_msg)
+            return (err_msg, 500)
+
+    return wrapper
+
+main = handle_error(main)

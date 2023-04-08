@@ -1,6 +1,9 @@
 import requests
 from google.cloud import firestore
 from datetime import datetime, timedelta
+from error_manager import ErrorManager
+
+error_manager = ErrorManager("save_holidays")
 
 def get_public_holidays(request):
     # Get the countryCode parameter from the request
@@ -10,6 +13,7 @@ def get_public_holidays(request):
     print(f'Get holiday {countryCode} {year}')
 
     if not countryCode:
+        error_manager.report("Missing countryCode parameter")
         return ('Error: Missing countryCode parameter', 400)
 
     db = firestore.Client()
@@ -23,14 +27,18 @@ def get_public_holidays(request):
     # Make a request to the Nager.Date API to get public holidays    
     response = requests.get(f'https://date.nager.at/api/v3/PublicHolidays/{year}/{countryCode}')
     if response.status_code != 200:
-        print(f'Request failed with status code {response.status_code}')
+        err_msg = f'Get Public holidays: Request failed with status code {response.status_code}'
+        error_manager.report(err_msg)
+        print(err_msg)
         return ('Error: Unable to retrieve public holidays', 500)
     holidays = response.json()
 
      # Make a request to the Nager.Date API to get bridge days 
     response = requests.get(f'https://date.nager.at/api/v3/LongWeekend/{year}/{countryCode}')
     if response.status_code != 200:
-        print(f'Request failed with status code {response.status_code}')
+        err_msg = f'Get Long Weekends: Request failed with status code {response.status_code}'
+        error_manager.report(err_msg)
+        print(err_msg)
         return ('Error: Unable to retrieve long weekends', 500)
     long_weekends = response.json()
 
@@ -45,8 +53,6 @@ def get_public_holidays(request):
                 "countryCode": countryCode
             }
             bridge_days.append(bridge_holiday)
-    
-    print(bridge_days)
     
     holidays = holidays + bridge_days
     
@@ -75,7 +81,9 @@ def handle_error(func):
         except Exception as e:
             import traceback
             traceback.print_exc()
-            return (f'Error: {str(e)}', 500)
+            err_msg = f'Error: {str(e)}'
+            error_manager.report(err_msg)
+            return (err_msg, 500)
 
     return wrapper
 

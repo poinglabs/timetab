@@ -7,6 +7,17 @@
       "latitude":"Latitud",
       "longitude":"Longitud",
       "autodetect":"Autodetectar",
+      "holidays": {
+        "title": "Feriados",
+        "description" : "Importá feriados públicos de un país, van a aparecer en la vista Calendario y Próximo Feriado. Please note that there may be some errors in the imported holidays. See <1 href='#' onClick={handleShowHolidayInstruction} style={{textDecoration: 'underline', pointer: 'cursor'}}>how to add or remove holidays</1>.",
+        "import": "",
+        "delete": "",
+        "select": "",
+        "howto_title": "",
+        "howto_add": "",
+        "howto_delete": "",
+        "howto_advanced": ""
+      },
       "pleaseShareLocation" : "Por favor compartí tu <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>ubicación</1>"
     },
     "themes" : {

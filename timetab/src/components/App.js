@@ -68,14 +68,15 @@ function App() {
 
   const modalCustomStyles = {
     content: {
-      top: '40%',
+      top: '50%',
       left: '50%',
       right: 'auto',
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: 'white',
-      minWidth: '650px'
+      minWidth: '700px',
+      maxHeight: "90%"
     },
     overlay: {
       backgroundColor: '#00000094'
