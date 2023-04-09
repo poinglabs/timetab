@@ -92,7 +92,13 @@
   align-content: center;
 
 }
+.month-day__wd:hover {
+  cursor:pointer;
+}
 
+.month-day__event {
+  cursor:pointer;
+}
 
 .month-day--first {
   border-top-left-radius: 8px;

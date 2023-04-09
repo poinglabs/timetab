@@ -6,6 +6,7 @@ import '../css/App.css';
 import Welcome from './Welcome';
 import TenMinutesBlocks from './TenMinutesBlocks';
 import YearProgress from './YearProgress';
+import NextHoliday from './NextHoliday';
 import MonthsColumns from './MonthsColumns';
 import LifeCalendar from './LifeCalendar';
 
@@ -68,14 +69,15 @@ function App() {
 
   const modalCustomStyles = {
     content: {
-      top: '40%',
+      top: '50%',
       left: '50%',
       right: 'auto',
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: 'white',
-      minWidth: '650px'
+      minWidth: '700px',
+      maxHeight: "90%"
     },
     overlay: {
       backgroundColor: '#00000094'
@@ -95,7 +97,7 @@ function App() {
 
   //functions
 
-  const views = ["/", "/ten-minutes-blocks", "/year-progress", "/months-columns", "life-calendar"]
+  const views = ["/", "/ten-minutes-blocks", "/year-progress", "/next-holiday", "/months-columns", "life-calendar"]
   const views_blur = [false, true, true, true, true]
   const view_weights = [0,0,0,0,1,1,2,2,3,3]
 
@@ -444,6 +446,7 @@ function App() {
               <Route exact path="/" ><Welcome times={sunCalcTimes} locationOn={locationGeo.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle} /></Route>
               <Route exact path="/ten-minutes-blocks"><TenMinutesBlocks times={sunCalcTimes} locationOn={locationGeo.autodetect}/></Route>
               <Route exact path="/year-progress"><YearProgress /></Route>
+              <Route exact path="/next-holiday"><NextHoliday openSettingsModal={openSettingsModal}/></Route>
               <Route exact path="/months-columns"><MonthsColumns /></Route>
               <Route exact path="/life-calendar"><LifeCalendar times={sunCalcTimes} locationOn={locationGeo.autodetect}/></Route>
             </Switch>

@@ -4,6 +4,8 @@
 
 section {
     margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px dashed grey;
 }
 
 h2 {
@@ -29,6 +31,14 @@ h3 {
     opacity: 1;
 }
 
+.btn-close_section {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    font-family: var(--font-secondary);
+}
+
 .lang-chip {
     margin-right: 8px;
     border-color: black;
@@ -47,8 +57,31 @@ h3 {
     font-size: 12px;
     white-space: pre-wrap;
 }
+
+.please-share img {
+    width: 250px;
+    height: auto;
+}
+
 .please-share a {
     white-space: pre-wrap;
+}
+
+.holidays_description {
+    font-family: var(--font-secondary);
+    font-size: 12px;
+}
+
+#holidays_output {
+    display: none;
+    font-family: var(--font-secondary);
+    font-size: 12px; 
+    margin: 15px 0px 0px 0px;
+}
+
+.donation-text {
+    font-family: var(--font-secondary);
+    font-size: 12px;
 }
 
 .theme-box {
@@ -67,4 +100,24 @@ h3 {
     background-size: cover;
     background-color: khaki;
     overflow: hidden;
+}
+
+#how-to-add-holidays {
+    display: none;
+}
+
+#how-to-add-holidays img {
+    width: 250px;
+    height: auto;
+}
+
+.fakelink {
+    text-decoration: underline;
+    color: darkblue;
+}
+
+.fakelink:hover {
+    text-decoration: underline;
+    color: lightblue;
+    cursor: pointer;
 }

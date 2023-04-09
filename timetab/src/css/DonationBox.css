@@ -1,0 +1,112 @@
+#donation-box {
+    background-color: rgb(240, 240, 240);
+    border-radius: 10px;
+    padding: 0;
+    margin: 15px 0px;
+    font-family: var(--font-secondary);
+    font-size: 12px;
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid rgb(188, 188, 188);
+    border-right: 1px solid rgb(188, 188, 188);
+    border-left: 1px solid rgb(188, 188, 188);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    background-color: aliceblue;
+    padding: 8px 8px 0 8px;
+    margin: 0;
+}
+
+.payment-method {
+    list-style: none;
+    margin: 0 15px 0 0;
+}
+
+.payment-method.active {
+    border-bottom: 1px grey solid;
+}
+
+.payment-method:hover {
+    cursor: pointer;
+}
+
+.payment-method img {
+    height: 25px;
+    width: auto;
+}
+
+.payment-content {
+    list-style: none;
+    padding: 15px;
+    border-bottom: 1px solid rgb(188, 188, 188);
+    border-right: 1px solid rgb(188, 188, 188);
+    border-left: 1px solid rgb(188, 188, 188);
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.payment-content p {
+    margin: 0 0 10px 0;
+}
+
+.developed-by {
+    padding-top: 20px;
+    text-align: right;
+    font-family: var(--font-secondary);
+    font-size: 12px;
+}
+
+.address_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 40px;
+    width: 450px;
+}
+
+.address_box__text {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    font-size: 14px;
+    width: 410px;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    border-left: 1px solid grey;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: white;
+    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+}
+
+.address_box__copy {
+    width: 40px;
+    border-left: 1px solid grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid grey;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgb(220, 220, 220);
+}
+
+.address_box__copy:hover {
+    background-color: #edff86;
+    cursor: pointer;
+}
+
+.mp-button {
+    text-decoration: none;
+}
+
+.mp-button button{
+   background-color: #009ee3;
+}
+
+.mp-button button:hover{
+    background-color: #4287F5;
+ }

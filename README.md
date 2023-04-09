@@ -30,6 +30,13 @@ Add a key "events" in localStorage with the following value shema:
 
 ## Changelog
 
+### v1.0.1 (08.04.2023)
+
+ - Import holidays
+ - Add and remove custom holidays / free days
+ - Next holiday view
+ - Donations
+
 ### v0.1.1 (05.01.2022)
 
  - Random first view
