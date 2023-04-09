@@ -42,7 +42,9 @@ const resources = {
           "howto_advanced": "Advanced: Events and holidays are stored in localStorage under the key 'events'. Feel free to edit that value to add or remove custom events."
         },
         "pleaseShareLocation" : "Please enable location settings in your <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>browser</1> and OS to get the full theme experience",
-        "locationOs" : "Important: If you're using Chrome on a Mac desktop, you may get a notification that 'Location is turned off in your Mac system preferences.' To update your computer's location preferences, follow the onscreen instructions."
+        "locationOs" : "Important: If you're using Chrome on a Mac desktop, you may get a notification that 'Location is turned off in your Mac system preferences.' To update your computer's location preferences, follow the onscreen instructions.",
+        "share" : "Share",
+        "shareMessage" : "Revamp your new tab page with Timetab. Check out this Chrome extension to stay on top of your life!"
       },
       "next-holiday": {
         "title" : "Next holiday in",
@@ -123,7 +125,7 @@ const resources = {
           "title" : "Donaciones",
           "text" : "¿Alguna vez te has preguntado por qué los programadores nunca ven el sol?<1 />¡Porque están ocupados creando herramientas como esta extensión! Pero en serio, si te gusta lo que hacemos, por favor considera apoyarnos con una donación para que podamos seguir mejorando.",
           "developedBy" : "'Timetab' es un producto desarrollado por <1 target='_blank' rel='noreferrer' href='https://poinglabs.com'>Poing Labs.</1>",
-          "mpButton" : "Donar 200 ARS"
+          "mpButton" : "Donar $200"
         },
         "holidays": {
           "title": "Feriados",
@@ -143,7 +145,9 @@ const resources = {
           "howto_advanced": "Avanzado: Los eventos y días festivos se almacenan en localStorage bajo la clave 'events'. Siéntete libre de editar ese valor para añadir o eliminar eventos personalizados."
         },
         "pleaseShareLocation" : "Por favor active la configuración de ubicación en su <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>navegador</1> y sistema operativo para obtener la experiencia completa del tema",
-        "locationOs" : "Importante: Si estás usando Chrome en un ordenador Mac, es posible que aparezca la notificación 'La ubicación está desactivada en las preferencias del sistema de Mac.' Para actualizar las preferencias de ubicación de tu ordenador, sigue las instrucciones que aparecen en pantalla."
+        "locationOs" : "Importante: Si estás usando Chrome en un ordenador Mac, es posible que aparezca la notificación 'La ubicación está desactivada en las preferencias del sistema de Mac.' Para actualizar las preferencias de ubicación de tu ordenador, sigue las instrucciones que aparecen en pantalla.",
+        "share" : "Compartir",
+        "shareMessage" : "Renueva tu página de pestaña nueva con Timetab. ¡Descubre esta extensión de Chrome para mantenerte al día con tu vida!"
       },
       "next-holiday": {
         "title" : "Próximo feriado en",
@@ -245,7 +249,9 @@ const resources = {
           "locationOs" : "Wichtig: Wenn Sie Chrome auf einem Mac-Computer verwenden, wird Ihnen möglicherweise die Benachrichtigung „Standortermittlung ist in den Mac-Systemeinstellungen deaktiviert“ angezeigt. Folgen Sie der Anleitung auf dem Bildschirm, um die Standorteinstellungen auf Ihrem Computer zu aktualisieren."
         },
         "pleaseShareLocation" : "Bitte aktivieren Sie die Standortseinstellungen in Ihrem <1 target='_blank' href='https://support.google.com/chrome/answer/142065'>Browser</1> und Betriebssystem, um das Thema in vollem Umfang nutzen zu können",
-        "locationOs" : "Wichtig: Wenn Sie Chrome auf einem Mac-Computer verwenden, wird Ihnen möglicherweise die Benachrichtigung „Standortermittlung ist in den Mac-Systemeinstellungen deaktiviert“ angezeigt. Folgen Sie der Anleitung auf dem Bildschirm, um die Standorteinstellungen auf Ihrem Computer zu aktualisieren."
+        "locationOs" : "Wichtig: Wenn Sie Chrome auf einem Mac-Computer verwenden, wird Ihnen möglicherweise die Benachrichtigung „Standortermittlung ist in den Mac-Systemeinstellungen deaktiviert“ angezeigt. Folgen Sie der Anleitung auf dem Bildschirm, um die Standorteinstellungen auf Ihrem Computer zu aktualisieren.",
+        "share" : "Teilen",
+        "shareMessage" : "Gib deiner new-tab page mit Timetab einen neuen Look. Entdecke diese Chrome-Erweiterung, um dein Leben im Griff zu haben!"
       },
       "next-holiday": {
         "title" : "Nächster Feiertag in",

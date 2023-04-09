@@ -4,7 +4,7 @@
     padding: 0;
     margin: 15px 0px;
     font-family: var(--font-secondary);
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .payment-methods {
@@ -56,7 +56,14 @@
     padding-top: 20px;
     text-align: right;
     font-family: var(--font-secondary);
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 26px;
+}
+
+.developed-by a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
 }
 
 .address_box {

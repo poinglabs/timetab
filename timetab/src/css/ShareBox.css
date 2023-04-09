@@ -1,0 +1,19 @@
+#share-box {
+    display: inline-flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    margin-left: 10px;
+}
+
+.share-icon {
+    font-size: 14px;
+    margin-left: 5px;
+    color: grey;
+}
+
+.share-icon:hover {
+    cursor: pointer;
+    color: rgb(40, 40, 40);
+}

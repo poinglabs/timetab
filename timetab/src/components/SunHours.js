@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Moment from 'react-moment';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import { useTranslation, Trans } from 'react-i18next';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 function SunHours(props) {
 
@@ -79,7 +81,7 @@ function SunHours(props) {
     <div className="c-sun-hours">
       <div className="sun-hours__hours">
         <div className="sun-hours__hours__hour" style={{ "left": (100 * sunriseHours / 24).toString() + "%" }}><WbSunnyIcon className="icon" style={{ fontSize: 24 }} /><Moment format="HH·mm" date={times.sunrise}></Moment></div>
-        <div className="sun-hours__hours__hour" style={{ "left": (100 * sunsetHours / 24).toString() + "%" }}><i title={moonPhase} className="moon-icon icon"><span className="moon-icon__moon"></span></i><Moment format="HH·mm" date={times.sunset}></Moment></div>
+        <div className="sun-hours__hours__hour" style={{ "left": (100 * sunsetHours / 24).toString() + "%" }}><Tooltip title={moonPhase} placement="top" arrow><i className="moon-icon icon"><span className="moon-icon__moon"></span></i></Tooltip><Moment format="HH·mm" date={times.sunset}></Moment></div>
       </div>
       <div className="sun-hours__container-lines">
         <div className="sun-hours__container-lines__lines" style={{ "left": (100 * sunriseHours / 24).toString() + "%", "width": (100 * (sunsetHours - sunriseHours) / 24).toString() + "%" }} ></div>

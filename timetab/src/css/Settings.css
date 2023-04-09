@@ -54,7 +54,8 @@ h3 {
     display: inline-block;
     align-items: center;
     font-family: var(--font-secondary);
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 24px;
     white-space: pre-wrap;
 }
 
@@ -69,19 +70,22 @@ h3 {
 
 .holidays_description {
     font-family: var(--font-secondary);
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 24px;
 }
 
 #holidays_output {
     display: none;
     font-family: var(--font-secondary);
-    font-size: 12px; 
+    font-size: 13px;
+    line-height: 24px;
     margin: 15px 0px 0px 0px;
 }
 
 .donation-text {
     font-family: var(--font-secondary);
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 24px;
 }
 
 .theme-box {

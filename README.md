@@ -30,6 +30,11 @@ Add a key "events" in localStorage with the following value shema:
 
 ## Changelog
 
+### v1.0.2 (09.04.2023)
+
+ - Share buttons
+ - Minor UI changes
+
 ### v1.0.1 (08.04.2023)
 
  - Import holidays

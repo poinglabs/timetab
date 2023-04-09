@@ -25,6 +25,7 @@ import flag_us from '../img/flags/US.svg';
 import flag_de from '../img/flags/DE.svg';
 
 import DonationBox from './DonationBox';
+import ShareBox from './ShareBox';
 
 function Settings(props) {
 
@@ -295,7 +296,7 @@ function Settings(props) {
         </h2>
         <div className='donation-text'><Trans i18nKey="settings.donations.text">Have you ever wondered why programmers never see the sun?<br />Because they're busy creating tools like this extension! But seriously, if you like what we do, please consider supporting us with a donation so we can keep improving!</Trans></div>
         <div><DonationBox /></div>
-        <div className='developed-by'><Trans i18nKey="settings.donations.developedBy">'Timetab' is a product developed by <a target="_blank" href="https://poinglabs.com" rel="noreferrer">Poing Labs.</a></Trans></div>
+        <div className='developed-by'><Trans i18nKey="settings.donations.developedBy">'Timetab' is a product developed by <a target="_blank" href="https://poinglabs.com" rel="noreferrer">Poing Labs.</a></Trans> <ShareBox /></div>
         </section>
       {!props.location.autodetect &&
           <section>
