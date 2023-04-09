@@ -171,7 +171,7 @@ function Settings(props) {
 
   const handleDeleteHolidays = () => {
     // Retrieve the existing array from localStorage
-    const events = JSON.parse(localStorage.getItem('events')) || [];
+    const events = JSON.parse(localStorage.getItem('events') || "[]") ;
 
     // Use lodash filter method to create a new array that contains only those events where the imported field is not true
     const filteredEvents = _.filter(events, (event) => {

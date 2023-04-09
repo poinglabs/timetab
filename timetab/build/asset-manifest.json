@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.69b421fe.chunk.css",
-    "main.js": "/static/js/main.448b0ef8.chunk.js",
-    "main.js.map": "/static/js/main.448b0ef8.chunk.js.map",
+    "main.js": "/static/js/main.3cb754bb.chunk.js",
+    "main.js.map": "/static/js/main.3cb754bb.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.45766175.js",
     "runtime-main.js.map": "/static/js/runtime-main.45766175.js.map",
-    "static/js/2.93944215.chunk.js": "/static/js/2.93944215.chunk.js",
-    "static/js/2.93944215.chunk.js.map": "/static/js/2.93944215.chunk.js.map",
+    "static/js/2.52b6ff53.chunk.js": "/static/js/2.52b6ff53.chunk.js",
+    "static/js/2.52b6ff53.chunk.js.map": "/static/js/2.52b6ff53.chunk.js.map",
     "static/js/3.4e0a7410.chunk.js": "/static/js/3.4e0a7410.chunk.js",
     "static/js/3.4e0a7410.chunk.js.map": "/static/js/3.4e0a7410.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.69b421fe.chunk.css.map": "/static/css/main.69b421fe.chunk.css.map",
-    "static/js/2.93944215.chunk.js.LICENSE.txt": "/static/js/2.93944215.chunk.js.LICENSE.txt",
+    "static/js/2.52b6ff53.chunk.js.LICENSE.txt": "/static/js/2.52b6ff53.chunk.js.LICENSE.txt",
     "static/media/001-ethiopia.svg": "/static/media/001-ethiopia.74ec2d59.svg",
     "static/media/002-oman.svg": "/static/media/002-oman.1c5e997a.svg",
     "static/media/003-tanzania.svg": "/static/media/003-tanzania.54387d20.svg",
@@ -292,8 +292,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.45766175.js",
-    "static/js/2.93944215.chunk.js",
+    "static/js/2.52b6ff53.chunk.js",
     "static/css/main.69b421fe.chunk.css",
-    "static/js/main.448b0ef8.chunk.js"
+    "static/js/main.3cb754bb.chunk.js"
   ]
 }
