@@ -1,5 +1,6 @@
 
 import '../css/Settings.css';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
@@ -9,10 +10,9 @@ import Paper from '@material-ui/core/Paper';
 
 import axios from 'axios';
 
-import { useState, useEffect } from 'react';
 import { FormControl, Select, MenuItem, Button } from '@material-ui/core';
 
-import { Trans } from 'react-i18next';
+import {useTranslation,  Trans } from 'react-i18next';
 import store from 'store'
 import _ from "lodash";
 
@@ -28,9 +28,9 @@ import DonationBox from './DonationBox';
 
 function Settings(props) {
 
-  /*
-  const { t } = useTranslation();
-  const [locationAutodetect, setLocationAutodetect] = useState(props.location.autodetect);
+  
+  const { i18n } = useTranslation();
+  /*const [locationAutodetect, setLocationAutodetect] = useState(props.location.autodetect);
 
   const handleLocAutodetectChange = (event) => {
     //console.log(event.target.checked)
@@ -145,29 +145,27 @@ function Settings(props) {
       if (selectedCountryCode !== "defaultCountryCode") {
       
       
-        printOutput('Importing...');
+        printOutput(i18n.t("settings.holidays.importing", "Importing..."));
         const response = await axios.get(`https://us-central1-poing-timetab.cloudfunctions.net/holidays_get_holidays?countryCode=${selectedCountryCode}&year=${selectedYear}`);
         const newEvents = response.data["holidays"];
         const existingEvents = JSON.parse(localStorage.getItem('events') || "[]");
         const newEventsNumber = newEvents.length
         const existingEventsNumber =existingEvents.length
 
-
         if (newEventsNumber+existingEventsNumber < 100) {
           
           const updatedEvents = _.concat(existingEvents, newEvents);
           localStorage.setItem('events', JSON.stringify(updatedEvents));
-          printOutput(`Success. ${newEventsNumber} holidays imported`);
-
+          printOutput(i18n.t("settings.holidays.importsuccess", { replace: { importedHolidays: newEventsNumber}}))
         } else {
-          printOutput(`Error. Too many events`);
+          printOutput(i18n.t("settings.holidays.errtoomanyevents", `Error. Too many events`))
         }
       } else {
-        printOutput(`Error. Please select a country`);
+        printOutput(i18n.t("settings.holidays.errpleaseselect", `Error. Please select a country`))
       }
     } catch (error) {
       console.error(error);
-      printOutput('Error fetching data');
+      printOutput(i18n.t("settings.holidays.errfetching", `Error fetching data`))
     }
   };
 
@@ -182,7 +180,7 @@ function Settings(props) {
 
     // Stringify and store the new array back in localStorage
     localStorage.setItem('events', JSON.stringify(filteredEvents));
-    printOutput(`Success. Imported events deleted.`);
+    printOutput(i18n.t("settings.holidays.deletesuccess", "Success. Imported events deleted."));
   };
 
   const handleClose = () => {
