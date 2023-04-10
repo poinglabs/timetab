@@ -4,6 +4,7 @@ A beautiful new tab page to take control of your time.
 
 [Download Extension](https://chrome.google.com/webstore/detail/timetab/liobdfgkcgpgfeoemlcoelichpjpbkhe)
 
+zip -r dist.zip *
 
 ## Events
 
