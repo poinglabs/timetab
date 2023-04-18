@@ -445,7 +445,7 @@ function App() {
             <Switch location={item}>
               <Route exact path="/" ><Welcome times={sunCalcTimes} locationOn={locationGeo.autodetect} moonIllumination={moonIllumination} moonParallacticAngle={moonParallacticAngle} /></Route>
               <Route exact path="/ten-minutes-blocks"><TenMinutesBlocks times={sunCalcTimes} locationOn={locationGeo.autodetect}/></Route>
-              <Route exact path="/year-progress"><YearProgress /></Route>
+              <Route exact path="/year-progress"><YearProgress locationGeo={locationGeo}/></Route>
               <Route exact path="/next-holiday"><NextHoliday openSettingsModal={openSettingsModal}/></Route>
               <Route exact path="/months-columns"><MonthsColumns /></Route>
               <Route exact path="/life-calendar"><LifeCalendar times={sunCalcTimes} locationOn={locationGeo.autodetect}/></Route>
