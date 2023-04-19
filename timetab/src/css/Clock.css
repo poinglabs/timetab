@@ -3,7 +3,7 @@
     width: 100%;*/
     font-family: var(--font-main);
     font-weight: 400;
-    font-size: 90px;
+    font-size: 110px;
     text-shadow: var(--color-on-background-shadow) 1px 1px 4px;
     display: inline-flex;
     align-items: center;
@@ -11,6 +11,7 @@
     padding: 0;
     color: var(--color-on-background);
     user-select: none;
+    margin-bottom: 20px;
 }
 
 .timer {

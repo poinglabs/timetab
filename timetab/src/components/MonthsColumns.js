@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/MonthsColumns.css';
 import { useTranslation } from 'react-i18next';
 import Slider from '@material-ui/core/Slider';
@@ -7,6 +7,7 @@ import moment from 'moment';
 import store from 'store'
 import Tooltip from '@material-ui/core/Tooltip';
 
+import Modal from 'react-modal';
 
 import _ from "lodash";
 
@@ -90,10 +91,17 @@ function Day(props) {
   return (
     <div className={classes.join(" ")}>
       <div className="month-day__wd" onClick={handleToggleHoliday}>{formatWeekDay(weekday)}</div>
-      <div className="month-day__wn">{day}</div>
+      <div className="month-day__wn" onClick={() => {props.openNewEventModal(isoDate)}}>{day}</div>
       <div className="month-day__event">{
-      dateEvents.map((ev) => { return <Tooltip title={ev.description} classes={{ tooltip: classes.tooltip }}>
-        <span onClick={() => handleDeleteEvent(ev.description)}>•</span></Tooltip> })
+      dateEvents.map((ev) => { 
+        if (ev.holiday) {
+          return <Tooltip title={ev.description} classes={{ tooltip: classes.tooltip }}>
+                  <span className="month-day__event_item" onClick={() => handleDeleteEvent(ev.description)}>•</span>
+                  </Tooltip>
+        } else {
+          return <span className="month-day__event_item" onClick={() => handleDeleteEvent(ev.description)}>{ev.description}</span>   
+        }
+      })
     }</div>
     </div>
   )
@@ -120,7 +128,7 @@ function Month(props) {
   return (
     <div className="month-column">
       <div className="month-title">{formatMonth(props.month)} {year.substr(2, 2)}</div>
-      <div className="day-container">{month_days.map((day) => { return <Day date={day} key={day}/> })}</div>
+      <div className="day-container">{month_days.map((day) => { return <Day date={day} key={day} openNewEventModal={props.openNewEventModal}/> })}</div>
     </div>
   )
 
@@ -129,6 +137,30 @@ function Month(props) {
 function MonthsColumns(props) {
 
   const [months, setMonths] = useState(4)
+  const [newEventIsOpen, setNewEventIsOpen] = useState(false)
+  const [newEventDate, setNewEventDate] = useState("")
+
+  const openNewEventModal = (date) => {
+    setNewEventDate(date)
+    setNewEventIsOpen(true)
+  }
+
+  const saveNewEvent = (date) => {
+    
+    const input = document.getElementById("new-event-text").value
+
+    if (input !== "") {
+      const existingEvents = JSON.parse(localStorage.getItem('events')) || [];
+      const newEvents = [{
+        "day" : date,
+        "description" : input
+      }]
+      
+      const updatedEvents = _.concat(existingEvents, newEvents);
+      localStorage.setItem('events', JSON.stringify(updatedEvents));
+      setNewEventIsOpen(false)
+    }
+  }
 
   const now = new Date();
   const month = now.getMonth();
@@ -149,8 +181,31 @@ function MonthsColumns(props) {
 
   const classes = useStyles();
 
+  const modalCustomStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      backgroundColor: 'white',
+      minWidth: '700px',
+      maxHeight: "90%"
+    },
+    overlay: {
+      backgroundColor: '#00000094'
+    }
+  };
+
+  const submitNewEvent =  (e, date) => {
+    if (e.keyCode === 13 && newEventIsOpen) {
+      saveNewEvent(date)
+    }
+  }
+
   return (
-    <div style={props.style} id="months-columns">
+    <div style={props.style} id="months-columns" onKeyDown={(e) => { submitNewEvent(e, newEventDate) }} >
       <div className="months-columns-title">
       <Slider
         defaultValue={4}
@@ -165,12 +220,17 @@ function MonthsColumns(props) {
         onChange={(e, value) => {setMonths(value)}}
       />
       </div>
-      <div className="months-container" style={{"gridTemplateColumns" : "repeat("+months+", auto)"}}>
-        {monthsArray.map((m) => { return <Month month={m["month"]} year={m["year"]} key={m["month"].toString()+m["year"].toString()}/> })}
+      <div className="months-container" style={{"gridTemplateColumns" : "repeat("+months+", 1fr)"}}>
+        {monthsArray.map((m) => { return <Month month={m["month"]} year={m["year"]} key={m["month"].toString()+m["year"].toString()} openNewEventModal={openNewEventModal}/> })}
       </div>
       <div className="footer">
       </div>
-
+      <Modal
+        isOpen={newEventIsOpen}
+        closeTimeoutMS={300}
+        style={modalCustomStyles}
+        contentLabel="Example Modal"
+      >{newEventDate} <input id="new-event-text" type="text"/> <button type="submit" onClick={() => saveNewEvent(newEventDate)}>Save</button><span onClick={() => setNewEventIsOpen(false)}>Close</span></Modal>
     </div>
   );
 }

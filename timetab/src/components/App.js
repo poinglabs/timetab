@@ -118,16 +118,20 @@ function App() {
 
   const switchView = (e) => {
     if (e.keyCode === 32) {
+      const isNewEventModalOper = document.getElementById("new-event-text") !== null
+      if (!isNewEventModalOper) {
+        let index = views.indexOf(location.pathname)
+        let new_index = index === views.length - 1 ? 0 : index + 1
+        blurView(new_index)
+        if (new_index === views.length - 1) {
+          store.set('switchMessage', "false")
+          setSwitchMessage(false)
+        }
 
-      let index = views.indexOf(location.pathname)
-      let new_index = index === views.length - 1 ? 0 : index + 1
-      blurView(new_index)
-      if (new_index === views.length - 1) {
-        store.set('switchMessage', "false")
-        setSwitchMessage(false)
+        history.push(views[new_index]);
       }
 
-      history.push(views[new_index]);
+      
     }
   }
 
