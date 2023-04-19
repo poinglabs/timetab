@@ -46,6 +46,11 @@ const resources = {
         "share" : "Share",
         "shareMessage" : "Revamp your new tab page with Timetab. Check out this Chrome extension to stay on top of your life!"
       },
+      "newevent" : {
+        "save" : "Save",
+        "close" : "Close",
+        "eventDescription" : "Event description"
+      },
       "seasons" : {
         "daystoDefault" : "{{days}} days to next season",
         "daysto" : "{{days}} days to {{nextSeason}}",
@@ -156,6 +161,11 @@ const resources = {
         "locationOs" : "Importante: Si estás usando Chrome en un ordenador Mac, es posible que aparezca la notificación 'La ubicación está desactivada en las preferencias del sistema de Mac.' Para actualizar las preferencias de ubicación de tu ordenador, sigue las instrucciones que aparecen en pantalla.",
         "share" : "Compartir",
         "shareMessage" : "Renueva tu página de pestaña nueva con Timetab. ¡Descubre esta extensión de Chrome para mantenerte al día con tu vida!"
+      },
+      "newevent" : {
+        "save" : "Guardar",
+        "close" : "Cerrar",
+        "eventDescription" : "Descripción del evento"
       },
       "seasons" : {
         "daystoDefault" : "Faltan {{days}} días para la próxima estación del año",
@@ -268,6 +278,11 @@ const resources = {
         "locationOs" : "Wichtig: Wenn Sie Chrome auf einem Mac-Computer verwenden, wird Ihnen möglicherweise die Benachrichtigung „Standortermittlung ist in den Mac-Systemeinstellungen deaktiviert“ angezeigt. Folgen Sie der Anleitung auf dem Bildschirm, um die Standorteinstellungen auf Ihrem Computer zu aktualisieren.",
         "share" : "Teilen",
         "shareMessage" : "Gib deiner new-tab page mit Timetab einen neuen Look. Entdecke diese Chrome-Erweiterung, um dein Leben im Griff zu haben!"
+      },
+      "newevent" : {
+        "save" : "Speichern",
+        "close" : "Schließen",
+        "eventDescription" : "Beschreibung des Events"
       },
       "seasons" : {
         "daystoDefault" : "{{days}} Tage bis zur nächsten Jahreszeit",

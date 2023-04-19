@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../css/MonthsColumns.css';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/styles';
 import moment from 'moment';
 import store from 'store'
 import Tooltip from '@material-ui/core/Tooltip';
+
+import { Button } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import TextField from '@material-ui/core/TextField';
 
 import Modal from 'react-modal';
 
@@ -134,11 +138,29 @@ function Month(props) {
 
 }
 
+function TextInput() {
+  const inputRef = useRef(null);
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+  
+  return <TextField id="new-event-text" inputRef={inputRef} label={i18n.t("newevent.eventDescription")} variant="outlined" style={{width : "250px", margin: "auto 15px"}}/>;
+}
+
 function MonthsColumns(props) {
+
+  const { i18n } = useTranslation();
 
   const [months, setMonths] = useState(4)
   const [newEventIsOpen, setNewEventIsOpen] = useState(false)
   const [newEventDate, setNewEventDate] = useState("")
+
+  var wd = i18n.t("time.weekdays."+new Date(newEventDate).getUTCDay().toString())
+  var d = new Date(newEventDate).getUTCDate()
+  var m = i18n.t("time.months."+new Date(newEventDate).getUTCMonth().toString())
+
 
   const openNewEventModal = (date) => {
     setNewEventDate(date)
@@ -190,7 +212,7 @@ function MonthsColumns(props) {
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
       backgroundColor: 'white',
-      minWidth: '700px',
+      minWidth: '800px',
       maxHeight: "90%"
     },
     overlay: {
@@ -230,7 +252,7 @@ function MonthsColumns(props) {
         closeTimeoutMS={300}
         style={modalCustomStyles}
         contentLabel="Example Modal"
-      >{newEventDate} <input id="new-event-text" type="text"/> <button type="submit" onClick={() => saveNewEvent(newEventDate)}>Save</button><span onClick={() => setNewEventIsOpen(false)}>Close</span></Modal>
+      ><div className="newevent-container"><div className="newevent-text">{wd} {d}, {m}</div> <TextInput /> <Button variant="contained" color="primary" style={{ height: "40px" }} onClick={() => saveNewEvent(newEventDate)}><Trans i18nKey="newevent.save">Save</Trans></Button><Button style={{ height: "40px" }} onClick={() => setNewEventIsOpen(false)}><CloseIcon style={{ fontSize: 24 }} /><Trans i18nKey="newevent.close">Close</Trans></Button></div></Modal>
     </div>
   );
 }
