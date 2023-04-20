@@ -31,6 +31,18 @@
                     {
                         "bgdImage": "soft-sunrise",
                         "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "sunrisemountains",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "surfing",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "calmmountains",
+                        "props": "lightColors"
                     }
                 ]
             },
@@ -57,6 +69,38 @@
                     {
                         "bgdImage": "clouded-hills",
                         "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "surfing2",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "surfing",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "beachtop2",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "palms",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "everest",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "valle",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "calmmountains",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "bluelayers",
+                        "props": "lightColors"
                     }
                 ]
             },
@@ -74,6 +118,18 @@
                     },
                     {
                         "bgdImage": "marin",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "sunrisemountains",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "surfing",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "calmmountains",
                         "props": "lightColors"
                     }
                 ]
@@ -121,6 +177,22 @@
                 "theme": [
                     {
                         "bgdImage": "beachtop",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "surfing2",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "surfing",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "beachtop2",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "palms",
                         "props": "lightColors"
                     }
                 ]
@@ -173,6 +245,14 @@
                     {
                         "bgdImage": "marin",
                         "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "sunrisemountains",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "calmmountains",
+                        "props": "lightColors"
                     }
                 ]
             },
@@ -195,6 +275,22 @@
                     {
                         "bgdImage": "clouded-hills",
                         "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "everest",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "valle",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "calmmountains",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "bluelayers",
+                        "props": "lightColors"
                     }
                 ]
             },
@@ -212,6 +308,14 @@
                     },
                     {
                         "bgdImage": "marin",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "sunrisemountains",
+                        "props": "lightColors"
+                    },
+                    {
+                        "bgdImage": "calmmountains",
                         "props": "lightColors"
                     }
                 ]

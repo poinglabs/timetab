@@ -4,7 +4,12 @@ A beautiful new tab page to take control of your time.
 
 [Download Extension](https://chrome.google.com/webstore/detail/timetab/liobdfgkcgpgfeoemlcoelichpjpbkhe)
 
+'''
 zip -r dist.zip *
+'''
+
+Image to base64 and resize
+https://codepen.io/andersdn/pen/VKPrgg
 
 ## Events
 
@@ -30,6 +35,13 @@ Add a key "events" in localStorage with the following value shema:
 ```
 
 ## Changelog
+
+### v1.1.0 (20.04.2023)
+
+ - Add Custom Events
+ - New background images
+ - Minor UI changes
+ - Added year seasons
 
 ### v1.0.2 (09.04.2023)
 

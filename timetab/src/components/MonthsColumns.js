@@ -226,6 +226,14 @@ function MonthsColumns(props) {
     }
   }
 
+  // delte past events
+  var filterDate = new Date();
+  filterDate.setDate(filterDate.getDate() - 14);
+  
+  const existingEvents = JSON.parse(localStorage.getItem('events')) || [];
+  const onlyFutureEvents = _.filter(existingEvents, function(o) { return new Date(o.day) >= filterDate})
+  localStorage.setItem('events', JSON.stringify(onlyFutureEvents));
+
   return (
     <div style={props.style} id="months-columns" onKeyDown={(e) => { submitNewEvent(e, newEventDate) }} >
       <div className="months-columns-title">

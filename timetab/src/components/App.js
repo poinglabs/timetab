@@ -145,6 +145,7 @@ function App() {
     })
     setSettingsOpen(true);
   }
+
   const closeSettingsModal = () => {
     logEvent("ui_interaction", {
       "section": "settings",
