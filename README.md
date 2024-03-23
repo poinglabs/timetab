@@ -36,6 +36,10 @@ Add a key "events" in localStorage with the following value shema:
 
 ## Changelog
 
+### v1.1.1 (23.03.2024)
+
+ - Removed GTM
+
 ### v1.1.0 (20.04.2023)
 
  - Add Custom Events
